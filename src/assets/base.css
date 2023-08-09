@@ -1,0 +1,61 @@
+/* color palette for nightvision */
+:root {
+  --nv-c-black: #030301;
+  --nv-c-darkgrey: #161817;
+  --nv-c-grey: #272b28;
+  --nv-c-lightgrey: #ada399;
+  --nv-c-green: #60bf22;
+
+  --nv-c-divider-dark-1: rgba(84, 84, 84, 0.65);
+  --nv-c-divider-dark-2: rgba(84, 84, 84, 0.48);
+
+  --nv-c-text-dark-1: var(--nv-c-lightgrey);
+  --nv-c-text-dark-2: rgba(235, 235, 235, 0.64);
+}
+
+/* semantic color variables */
+:root {
+  --color-background: var(--nv-c-darkgrey);
+
+  --color-border: var(--nv-c-divider-dark-2);
+  --color-border-hover: var(--nv-c-green);
+
+  --color-heading: var(--nv-c-text-dark-1);
+  --color-text: var(--nv-c-text-dark-1);
+
+  --section-gap: 160px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+}
+
+/* Tile size properties */
+:root {
+  --tile-height: 150px;
+  --tile-width: 105px;
+  --tile-b-rad: 10px;
+  --tile-thickness: calc(var(--tile-width)/10);
+  --tile-hover-padding: 10px;
+  --tile-hover-border-w: 4px;
+
+  --board-width: calc((var(--tile-width) + (var(--tile-hover-padding)*2))*7 + 30px);
+}
+
+body {
+  min-height: 100vh;
+  color: var(--color-text);
+  background: var(--color-background);
+  transition: color 0.5s, background-color 0.5s;
+  line-height: 1.6;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+    Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-size: 15px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
