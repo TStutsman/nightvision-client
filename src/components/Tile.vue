@@ -17,14 +17,19 @@ watch(() => props.illuminated == true, () => {
 
 <template>
     <div @click="$emit('showTile')" class="tile-container" :class="{selectable:!revealed}">
-        <div class="tile" :class="{flipped:revealed, unflipped:!revealed, bright:illuminated}">
-            <i :class="{hidden:!revealed, unhidden:revealed}">
-                <slot v-if="revealed" name="icon"></slot>
-            </i>
-            <div class="tile-name" :class="{hidden:!revealed, unhidden:revealed}">
-                <h3>
-                    <slot v-if="revealed" name="description"></slot>
-                </h3>
+        <div class="tile" :class="{bright:illuminated}">
+            <div class="tile-inner" :class="{flipped:revealed, unflipped:!revealed}">
+                <div class="tile-back"></div>
+                <div class="tile-front">
+                    <i :class="{hidden:!revealed, unhidden:revealed}">
+                        <slot v-if="revealed" name="icon"></slot>
+                    </i>
+                    <div class="tile-name" :class="{hidden:!revealed, unhidden:revealed}">
+                        <h3>
+                            <slot v-if="revealed" name="description"></slot>
+                        </h3>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -38,14 +43,39 @@ watch(() => props.illuminated == true, () => {
     border-radius: calc(var(--tile-b-rad)*2);
 }
 .tile{
-    background-color: var(--nv-c-grey);
     height: var(--tile-height);
     width: var(--tile-width);
     border-radius: var(--tile-b-rad);
     transform-origin: center;
     transition: background-color .5s;
+
+    background-color: transparent;
+    perspective: 1000px;
 }
-.bright{
+.tile-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transform-style: preserve-3d;
+}
+.tile-back, .tile-front {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    box-sizing: content-box;
+    -webkit-backface-visibility: hidden; /* Safari */
+    backface-visibility: hidden;
+    border-radius: var(--tile-b-rad);
+}
+.tile-back {
+    background-color: var(--nv-c-grey);
+}
+.tile-front {
+    transform: rotateY(180deg);
+    background-color: var(--nv-c-grey);
+}
+.bright {
     background-color: var(--nv-c-lightgrey);
 }
 
@@ -79,58 +109,30 @@ h3 {
 }
 
 .unflipped {
-    animation: unflip .5s 1 forwards;
-}
-
-.hidden {
-    visibility: hidden;
-    transition-property: visibility;
-    transition-delay: .5s;
-}
-.unhidden {
-    visibility: visible;
+    animation: unflip .75s 1 forwards;
 }
 
 @keyframes flip {
     from {
-        margin: 0;
-        transform: scaleX(1);
-        /* width: var(--tile-width); */
+        transform: rotateY(0);
     }
-    10% {
+    20% {
         transform: translateX(-20px);
     }
-    50% {
-        /* margin: 0 calc(65px/2); */
-        transform: scaleX(.1);
-        /* width: var(--tile-thickness); */
-    }
     to {
-        margin: 0;
-        /* width: var(--tile-width); */
-        transform: translateX(0) scaleX(1);
+        transform: translateX(0) rotateY(180deg);
     }
 }
 
 @keyframes unflip {
     from {
-        margin: 0;
-        width: var(--tile-width);
-        border-radius: var(--tile-b-rad);
+        transform: rotateY(180deg);
     }
     20% {
-        transform: translateX(20px);
-    }
-    50% {
-        margin: 0 calc(65px/2);
-        width: var(--tile-thickness);
-        border-radius: 1px;
+        transform: rotateY(150deg) translateX(-20px);
     }
     to {
-        margin: 0;
-        width: var(--tile-width);
-        transform: translateX(0);
-        border-radius: var(--tile-thickness);
+        transform: translateX(0) rotateY(0);
     }
 }
 
