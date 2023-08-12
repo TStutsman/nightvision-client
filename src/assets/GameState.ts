@@ -74,7 +74,11 @@ export const flipTile = (id:number) => {
       ? 2
       : 0
 
-      endGameState.value = `Player ${winner} Wins!`
+      if(winner == 0){
+        endGameState.value = "It's a tie";
+      } else {
+        endGameState.value = `Player ${winner} Wins!`
+      }
       gameOver.value = true;
     }
 
