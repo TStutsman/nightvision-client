@@ -17,9 +17,9 @@ watch(() => props.illuminated == true, () => {
 
 <template>
     <div @click="$emit('showTile')" class="tile-container" :class="{selectable:!revealed}">
-        <div class="tile" :class="{bright:illuminated}">
+        <div class="tile">
             <div class="tile-inner" :class="{flipped:revealed, unflipped:!revealed}">
-                <div class="tile-back"></div>
+                <div class="tile-back" :class="{bright:illuminated}"></div>
                 <div class="tile-front">
                     <i :class="{hidden:!revealed, unhidden:revealed}">
                         <slot v-if="revealed" name="icon"></slot>
@@ -47,7 +47,6 @@ watch(() => props.illuminated == true, () => {
     width: var(--tile-width);
     border-radius: var(--tile-b-rad);
     transform-origin: center;
-    transition: background-color .5s;
 
     background-color: transparent;
     perspective: 1000px;
@@ -70,6 +69,7 @@ watch(() => props.illuminated == true, () => {
 }
 .tile-back {
     background-color: var(--nv-c-grey);
+    transition: background-color .5s;
 }
 .tile-front {
     transform: rotateY(180deg);
@@ -78,7 +78,6 @@ watch(() => props.illuminated == true, () => {
 .bright {
     background-color: var(--nv-c-lightgrey);
 }
-
 i {
   display: flex;
   place-items: center;

@@ -13,7 +13,7 @@ export function bearSpray() {
 export const flashlight = (id: number) => {
     let lower = 0; // the range values for the row
     let upper = 7;
-    switch( id/7 ){ // set the range based on the selected tile
+    switch( Math.floor(id/7) ){ // set the range based on the selected tile
         case 1:
             lower = 7;
             upper = 14;

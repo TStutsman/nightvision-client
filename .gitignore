@@ -29,3 +29,7 @@ coverage
 
 # Vue defaults for reference only
 src/components/vueDefaults
+
+.firebaserc
+firebase.json
+.firebase/*
