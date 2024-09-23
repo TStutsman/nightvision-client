@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import type { Ref } from 'vue';
-import './../assets/base.css';
+import './../styles/base.css';
 import Tile from '../components/Tile.vue';
 import UserScore from '../components/UserScore.vue';
 import Inventory from '../components/Inventory.vue';

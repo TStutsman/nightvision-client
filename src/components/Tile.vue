@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { watch } from 'vue';
-import './../assets/base.css'
+import './../styles/base.css';
 const props = defineProps<{
   revealed: boolean
   illuminated: boolean | undefined
