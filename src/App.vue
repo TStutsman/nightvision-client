@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import GameBoard from './components/GameBoard.vue'
+import GameBoard from './views/GameBoard.vue'
 import GameHeading from './components/GameHeading.vue'
 
 const gameId = ref<number>(0)

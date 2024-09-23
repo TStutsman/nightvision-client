@@ -3,7 +3,7 @@ import { watch } from 'vue';
 import './../assets/base.css'
 const props = defineProps<{
   revealed: boolean
-  illuminated: boolean
+  illuminated: boolean | undefined
 }>()
 const emit = defineEmits(['deilluminate', 'showTile']);
 

@@ -2,15 +2,16 @@
 import { ref } from 'vue';
 import type { Ref } from 'vue';
 import './../assets/base.css';
-import Tile from './Tile.vue';
-import UserScore from './UserScore.vue'
-import Inventory from './Inventory.vue'
-import Ability from './Ability.vue'
-import EndGameView from './EndGameView.vue'
+import Tile from '../components/Tile.vue';
+import UserScore from '../components/UserScore.vue';
+import Inventory from '../components/Inventory.vue';
+import Ability from '../components/Ability.vue';
+import EndGameView from './EndGameView.vue';
 
 interface Tile {
   type: string;
   revealed: boolean;
+  illuminated: boolean | undefined;
 }
 
 interface Player {
