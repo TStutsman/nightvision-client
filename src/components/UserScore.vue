@@ -1,8 +1,8 @@
 <script setup lang="ts">
 const props = defineProps<{
-  score: number,
-  player: number,
-  turn: boolean
+  score: number | undefined,
+  player: number | undefined,
+  turn: boolean | undefined
 }>()
 
 </script>

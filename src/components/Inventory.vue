@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const props = defineProps<{
-  hasSpray: boolean,
+  hasSpray: boolean | undefined,
 }>()
 </script>
 

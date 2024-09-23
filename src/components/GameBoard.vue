@@ -1,24 +1,81 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+import type { Ref } from 'vue';
 import './../assets/base.css';
 import Tile from './Tile.vue';
 import UserScore from './UserScore.vue'
 import Inventory from './Inventory.vue'
 import Ability from './Ability.vue'
-import GameOver from './GameOver.vue'
-import { bearSpray, reshuffle } from './../assets/abilities'
-import { flipTile, deilluminate, resetGame, tiles, usersPoints, gameOver, userSpray, flashlightOn, bearSpotted, whoseTurn, endGameState } from '@/assets/GameState';
+import EndGameView from './EndGameView.vue'
 
-const turnOnFlashlight = () => {
-  flashlightOn.value = true;
+interface Tile {
+  type: string;
+  revealed: boolean;
 }
+
+interface Player {
+  id: number,
+  hasSpray: boolean,
+  points: number
+}
+
+interface Game {
+  activePlayer: number;
+  players: Player[];
+  bearSpotted: boolean;
+
+  gameOver: boolean;
+  endGameStatus: string;
+
+  deck: Tile[];
+  flippedTiles: Tile[];
+}
+
+const game:Ref<Game | null> = ref(null);
+
+const props = defineProps<{
+  gameId: number
+}>()
+
+function resetGame():void {
+  fetch(`api/game/new`)
+    .then(res => res.json())
+    .then(data => game.value = data)
+    .catch(error => console.log(error));
+}
+
+function flipTile(index:number):void {
+  // helper for tile animation - potentially makes an API call?
+}
+
+function deilluminate(index:number):void {
+  // helper for flashlight cleanup
+}
+
+function turnOnFlashlight() {
+  // user has clicked the flashlight button
+}
+
+function bearSpray() {
+  // user has clicked the bear spray button
+}
+
+function reshuffle() {
+  // user has clicked the reshuffle button
+}
+
+fetch(`/api/game/${props.gameId}`)
+  .then(res => res.json())
+  .then(data => game.value = data)
+  .catch(error => console.log(error));
 </script>
 
 <template>
   <div class="board">
-    <GameOver v-if="gameOver" @play-again="resetGame" :endGameState="endGameState"/>
+    <EndGameView v-if="game?.gameOver" @play-again="resetGame" :endGameState="game?.endGameStatus"/>
     
     <Tile 
-      v-for="(tile, index) in tiles" 
+      v-for="(tile, index) in game?.deck" 
       :key="index" 
       :revealed="tile.revealed"
       :illuminated="tile.illuminated"
@@ -27,6 +84,8 @@ const turnOnFlashlight = () => {
       >
       <template #icon>
         <!-- icons for cards go here once i make them -->
+        <img src="" alt="">
+        {{ tile.type }}
       </template>
       <template #description>
         {{ tile.type }}
@@ -34,7 +93,7 @@ const turnOnFlashlight = () => {
     </Tile>
   </div>
 
-  <div class="bearWarning" :class="{hidden:!bearSpotted, unhidden:bearSpotted}">BEAR SPOTTED</div>
+  <div class="bearWarning" :class="{hidden:!game?.bearSpotted, unhidden:game?.bearSpotted}">BEAR SPOTTED</div>
 
   <div class="abilities">
     <Ability @flashlight="turnOnFlashlight" ability="flashlight">
@@ -58,10 +117,10 @@ const turnOnFlashlight = () => {
   </div>
 
   <div class="scoreboard">
-    <Inventory :hasSpray="userSpray[0]"/>
-    <UserScore :turn="whoseTurn == 0" :player="1" :score="usersPoints[0]"/>
-    <UserScore :turn="whoseTurn == 1" :player="2" :score="usersPoints[1]"/>
-    <Inventory :hasSpray="userSpray[1]"/>
+    <Inventory :hasSpray="game?.players[0].hasSpray"/>
+    <UserScore :turn="game?.activePlayer == 0" :player="1" :score="game?.players[0].points"/>
+    <UserScore :turn="game?.activePlayer == 1" :player="2" :score="game?.players[1].points"/>
+    <Inventory :hasSpray="game?.players[1].hasSpray"/>
   </div>
 </template>
 

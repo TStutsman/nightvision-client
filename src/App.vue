@@ -1,6 +1,13 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import GameBoard from './components/GameBoard.vue'
 import GameHeading from './components/GameHeading.vue'
+
+const gameId = ref<number>(0)
+
+fetch('/api/games/new')
+  .then(res => res.json())
+  .then(data => gameId.value = data)
 </script>
 
 <template>
@@ -13,7 +20,7 @@ import GameHeading from './components/GameHeading.vue'
 
   <main>
     <!-- this will be the game 'board' -->
-    <GameBoard />
+    <GameBoard :game-id="gameId"/>
   </main>
 </template>
 
