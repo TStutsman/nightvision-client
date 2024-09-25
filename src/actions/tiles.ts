@@ -1,9 +1,8 @@
 import type { TileData } from "@/models";
 
-export const postFlipTile = (gameId:number, tileId:number) => {
+export const postFlipTile = async (gameId:number, tileId:number):Promise<TileData[]> => {
   // TODO: Send API request to POST tile flip
-  let tile:TileData | null = null;
-  fetch(`api/games/${gameId}/flipTile`, {
+  const data:{deck: TileData[]} = await fetch(`api/games/${gameId}/flipTile`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -12,10 +11,9 @@ export const postFlipTile = (gameId:number, tileId:number) => {
       tileId
     }),
   })
-  .then(r => r.json())
-  .then(res => tile = res)
+  .then(r => r.json());
 
-  return tile;
+  return data.deck;
 }
 
 export function deilluminate(id:number) {

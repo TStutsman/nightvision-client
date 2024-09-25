@@ -16,16 +16,18 @@ const props = defineProps<{
 }>()
 
 const game:Ref<Game | null> = ref(null);
-const deck:Ref<TileData[] | undefined> = computed(() => game.value?.deck)
 
 fetch(`/api/games/${props.gameId}`)
   .then(res => res.json())
   .then(data => game.value = data);
 
-function flipTile(index: number) {
-  const tile = postFlipTile(props.gameId, index);
+async function flipTile(index: number) {
+  console.log(index)
+  const deck = await postFlipTile(props.gameId, index);
 
-  if (game.value && tile) game.value.deck[index] = tile;
+  if (game.value && deck) game.value.deck = deck;
+
+  console.log(deck, game.value?.deck)
 }
 </script>
 
