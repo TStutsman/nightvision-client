@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import type { Ref } from 'vue';
 import './../styles/base.css';
 import { bearSpray, flashlight, reshuffle } from '@/actions/abilities';
-import { flipTile, deilluminate, resetGame } from '@/actions/tiles';
-import type { Game } from '@/models';
+import { postFlipTile, deilluminate, resetGame } from '@/actions/tiles';
+import type { Game, TileData } from '@/models';
 import Tile from '../components/Tile.vue';
 import UserScore from '../components/UserScore.vue';
 import Inventory from '../components/Inventory.vue';
@@ -16,10 +16,17 @@ const props = defineProps<{
 }>()
 
 const game:Ref<Game | null> = ref(null);
+const deck:Ref<TileData[] | undefined> = computed(() => game.value?.deck)
 
 fetch(`/api/games/${props.gameId}`)
   .then(res => res.json())
   .then(data => game.value = data);
+
+function flipTile(index: number) {
+  const tile = postFlipTile(props.gameId, index);
+
+  if (game.value && tile) game.value.deck[index] = tile;
+}
 </script>
 
 <template>
@@ -31,13 +38,16 @@ fetch(`/api/games/${props.gameId}`)
       :key="index" 
       :revealed="tile.revealed"
       :illuminated="tile.illuminated"
-      @show-tile="flipTile(props.gameId, index)"
+      @show-tile="flipTile(index)"
       @deilluminate="deilluminate(index)"
       >
       <template #icon>
         <!-- icons for cards go here once i make them -->
-        <img src="" alt="">
-        {{ tile.type }}
+        <img 
+          v-bind:src="'https://nmls-pictures-bucket.s3.us-east-2.amazonaws.com/rainier_' + tile.type.toLowerCase() + '.jpg'" 
+          v-bind:alt="tile.type"
+          class="tile-img"
+        />
       </template>
       <template #description>
         {{ tile.type }}
@@ -112,5 +122,10 @@ fetch(`/api/games/${props.gameId}`)
   margin-top: 1rem;
   width: 100%;
   gap: 20px;
+}
+
+.tile-img {
+    height: 150px;
+    width: 105px;
 }
 </style>

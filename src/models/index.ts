@@ -1,7 +1,7 @@
-interface Tile {
-  type: string;
-  revealed: boolean;
-  illuminated: boolean | undefined;
+export interface TileData {
+  type: string,
+  revealed: boolean,
+  illuminated: boolean | undefined
 }
   
 export interface Player {
@@ -18,6 +18,6 @@ export interface Game {
   gameOver: boolean;
   endGameStatus: string;
 
-  deck: Tile[];
-  flippedTiles: Tile[];
+  deck: TileData[];
+  flippedTiles: TileData[];
 }
