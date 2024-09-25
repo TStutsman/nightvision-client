@@ -2,73 +2,24 @@
 import { ref } from 'vue';
 import type { Ref } from 'vue';
 import './../styles/base.css';
+import { bearSpray, flashlight, reshuffle } from '@/actions/abilities';
+import { flipTile, deilluminate, resetGame } from '@/actions/tiles';
+import type { Game } from '@/models';
 import Tile from '../components/Tile.vue';
 import UserScore from '../components/UserScore.vue';
 import Inventory from '../components/Inventory.vue';
 import Ability from '../components/Ability.vue';
 import EndGameView from './EndGameView.vue';
 
-interface Tile {
-  type: string;
-  revealed: boolean;
-  illuminated: boolean | undefined;
-}
-
-interface Player {
-  id: number,
-  hasSpray: boolean,
-  points: number
-}
-
-interface Game {
-  activePlayer: number;
-  players: Player[];
-  bearSpotted: boolean;
-
-  gameOver: boolean;
-  endGameStatus: string;
-
-  deck: Tile[];
-  flippedTiles: Tile[];
-}
-
-const game:Ref<Game | null> = ref(null);
-
 const props = defineProps<{
   gameId: number
 }>()
 
-function resetGame():void {
-  fetch(`api/game/new`)
-    .then(res => res.json())
-    .then(data => game.value = data)
-    .catch(error => console.log(error));
-}
+const game:Ref<Game | null> = ref(null);
 
-function flipTile(index:number):void {
-  // helper for tile animation - potentially makes an API call?
-}
-
-function deilluminate(index:number):void {
-  // helper for flashlight cleanup
-}
-
-function turnOnFlashlight() {
-  // user has clicked the flashlight button
-}
-
-function bearSpray() {
-  // user has clicked the bear spray button
-}
-
-function reshuffle() {
-  // user has clicked the reshuffle button
-}
-
-fetch(`/api/game/${props.gameId}`)
+fetch(`/api/games/${props.gameId}`)
   .then(res => res.json())
-  .then(data => game.value = data)
-  .catch(error => console.log(error));
+  .then(data => game.value = data);
 </script>
 
 <template>
@@ -76,11 +27,11 @@ fetch(`/api/game/${props.gameId}`)
     <EndGameView v-if="game?.gameOver" @play-again="resetGame" :endGameState="game?.endGameStatus"/>
     
     <Tile 
-      v-for="(tile, index) in game?.deck" 
+      v-for="(tile, index) in game?.deck"
       :key="index" 
       :revealed="tile.revealed"
       :illuminated="tile.illuminated"
-      @show-tile="flipTile(index)"
+      @show-tile="flipTile(props.gameId, index)"
       @deilluminate="deilluminate(index)"
       >
       <template #icon>
@@ -97,7 +48,7 @@ fetch(`/api/game/${props.gameId}`)
   <div class="bearWarning" :class="{hidden:!game?.bearSpotted, unhidden:game?.bearSpotted}">BEAR SPOTTED</div>
 
   <div class="abilities">
-    <Ability @flashlight="turnOnFlashlight" ability="flashlight">
+    <Ability @flashlight="flashlight" ability="flashlight">
       <template #name>FLASHLIGHT</template>
       <template #description>
         CHECK ONE ROW FOR BEARS

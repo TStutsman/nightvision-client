@@ -7,7 +7,7 @@ const gameId = ref<number>(0)
 
 fetch('/api/games/new')
   .then(res => res.json())
-  .then(data => gameId.value = data)
+  .then(data => gameId.value = data.gameId)
 </script>
 
 <template>
