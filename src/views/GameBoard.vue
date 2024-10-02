@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import type { Ref } from 'vue';
 import './../styles/base.css';
 import { bearSpray, flashlight, reshuffle } from '@/actions/abilities';
 import { postFlipTile, deilluminate, resetGame } from '@/actions/tiles';
-import type { Game, TileData } from '@/models';
+import type { Game } from '@/models';
 import Tile from '../components/Tile.vue';
 import UserScore from '../components/UserScore.vue';
 import Inventory from '../components/Inventory.vue';
