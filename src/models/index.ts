@@ -11,6 +11,8 @@ export interface Player {
 }
 
 export interface Game {
+  id: number;
+
   activePlayer: number;
   players: Player[];
   bearSpotted: boolean;

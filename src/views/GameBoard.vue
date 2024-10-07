@@ -1,34 +1,31 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import type { Ref } from 'vue';
-import './../styles/base.css';
 import { bearSpray, flashlight, reshuffle } from '@/actions/abilities';
-import { postFlipTile, deilluminate, resetGame } from '@/actions/tiles';
+import { deilluminate, resetGame } from '@/actions/tiles';
+import { Ability, Inventory, Tile, UserScore } from '@/components';
 import type { Game } from '@/models';
-import Tile from '../components/Tile.vue';
-import UserScore from '../components/UserScore.vue';
-import Inventory from '../components/Inventory.vue';
-import Ability from '../components/Ability.vue';
-import EndGameView from './EndGameView.vue';
+import type { VueSocket } from '@/VueSocket';
+import type { Ref } from 'vue';
+import { ref } from 'vue';
+import './../styles/base.css';
 
-const props = defineProps<{
-  gameId: number
+const { gameId, socket } = defineProps<{
+  gameId: number,
+  socket: VueSocket
 }>()
 
-const game:Ref<Game | null> = ref(null);
 
-fetch(`/api/games/${props.gameId}`)
-  .then(res => res.json())
-  .then(data => game.value = data);
+const r = await fetch(`/api/games/${gameId}`);
+const data = await r.json();
+const game:Ref<Game> = ref(data);
 
-async function flipTile(index: number) {
-  console.log(index)
-  const deck = await postFlipTile(props.gameId, index);
-
-  if (game.value && deck) game.value.deck = deck;
-
-  console.log(deck, game.value?.deck)
+function emitFlipTile(index: number) {
+  console.log('emitting flipTile:', index);
+  socket.emit('flipTile', index);
 }
+
+socket.on('tileFlip', (tile) => {
+  game.value.deck[tile.index].revealed = true;
+});
 </script>
 
 <template>
@@ -40,7 +37,7 @@ async function flipTile(index: number) {
       :key="index" 
       :revealed="tile.revealed"
       :illuminated="tile.illuminated"
-      @show-tile="flipTile(index)"
+      @show-tile="emitFlipTile(index)"
       @deilluminate="deilluminate(index)"
       >
       <template #icon>

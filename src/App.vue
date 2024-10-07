@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import GameBoard from './views/GameBoard.vue'
 import GameHeading from './components/GameHeading.vue'
+import { mountWebSocket } from "@/socket";
+import { initNewGame } from './actions/newGame';
 
-const gameId = ref<number>(0)
+const game = initNewGame();
 
-fetch('/api/games/new')
-  .then(res => res.json())
-  .then(data => gameId.value = data.gameId)
+const socket = mountWebSocket(game.id);
 </script>
 
 <template>
@@ -20,7 +19,13 @@ fetch('/api/games/new')
 
   <main>
     <!-- this will be the game 'board' -->
-    <GameBoard :game-id="gameId"/>
+    <Suspense>
+      <GameBoard :gameId="game.id" :socket="socket"/>
+
+      <template #fallback>
+        Loading...
+      </template>
+    </Suspense>
   </main>
 </template>
 
