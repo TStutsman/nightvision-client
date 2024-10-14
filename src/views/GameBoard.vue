@@ -2,17 +2,19 @@
 import { bearSpray, flashlight, reshuffle } from '@/actions/abilities';
 import { deilluminate, resetGame } from '@/actions/tiles';
 import { Ability, Inventory, Tile, UserScore } from '@/components';
+import EndGameView from './EndGameView.vue';
 import type { Game } from '@/models';
-import type { VueSocket } from '@/VueSocket';
+import { mountWebSocket } from '@/socket';
 import type { Ref } from 'vue';
 import { ref } from 'vue';
 import './../styles/base.css';
+import { watch } from 'vue';
 
-const { gameId, socket } = defineProps<{
-  gameId: number,
-  socket: VueSocket
-}>()
+const { gameId } = defineProps<{
+  gameId: number
+}>();
 
+const socket = await mountWebSocket(gameId);
 
 const r = await fetch(`/api/games/${gameId}`);
 const data = await r.json();
@@ -20,12 +22,19 @@ const game:Ref<Game> = ref(data);
 
 function emitFlipTile(index: number) {
   console.log('emitting flipTile:', index);
-  socket.emit('flipTile', index);
+  socket.emit('flipTile', { tileId: index });
 }
 
-socket.on('tileFlip', (tile) => {
-  game.value.deck[tile.index].revealed = true;
+socket.on('flipTile', ({ tileId, type }) => {
+  const tile = game.value.deck[tileId];
+  tile.revealed = true;
+  tile.type = type;
+
 });
+
+socket.on('noMatch', ({ tileId }) => [
+
+]);
 </script>
 
 <template>

@@ -10,8 +10,10 @@
     "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false"
   },
   "dependencies": {
+    "@types/ws": "^8.5.12",
     "@vueuse/core": "^11.1.0",
-    "vue": "^3.3.4"
+    "vue": "^3.3.4",
+    "websocket-express": "^3.1.1"
   },
   "devDependencies": {
     "@tsconfig/node18": "^18.2.0",

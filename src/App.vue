@@ -1,12 +1,9 @@
 <script setup lang="ts">
-import GameBoard from './views/GameBoard.vue'
-import GameHeading from './components/GameHeading.vue'
-import { mountWebSocket } from "@/socket";
+import GameBoard from './views/GameBoard.vue';
+import GameHeading from './components/GameHeading.vue';
 import { initNewGame } from './actions/newGame';
 
 const game = initNewGame();
-
-const socket = mountWebSocket(game.id);
 </script>
 
 <template>
@@ -20,7 +17,7 @@ const socket = mountWebSocket(game.id);
   <main>
     <!-- this will be the game 'board' -->
     <Suspense>
-      <GameBoard :gameId="game.id" :socket="socket"/>
+      <GameBoard :gameId="game.id"/>
 
       <template #fallback>
         Loading...

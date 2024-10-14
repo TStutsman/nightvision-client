@@ -1,20 +1,24 @@
 export class VueSocket extends WebSocket {
-    data:object;
     events:{ [eventName:string]: (data:object) => any};
 
     constructor(url:string, protocols:string[] = []) {
+        console.log(url, protocols)
         super(url, protocols);
-        this.data = {};
         this.events = {};
+        this.onclose = (err) => console.log(err);
         this.onmessage = (event) => this.handleEvent(event);
     }
 
     emit(eventName:string, data:any):void {
+        if (this.readyState !== this.OPEN) return;
+         
         const res = JSON.stringify({event: eventName, data});
         super.send(res);
     }
 
     send(data:any):void {
+        if (this.readyState !== this.OPEN) return;
+
         const res = JSON.stringify(data);
         super.send(res);
     }
@@ -24,7 +28,7 @@ export class VueSocket extends WebSocket {
     }
 
     handleEvent(event: MessageEvent):void {
-        const [ eventName, data ] = event.data;
+        const { eventName, data } = JSON.parse(event.data);
         const handler = this.events[eventName];
         handler(data);
     }
