@@ -21,7 +21,6 @@ const data = await r.json();
 const game:Ref<Game> = ref(data);
 
 function emitFlipTile(index: number) {
-  console.log('emitting flipTile:', index);
   socket.emit('flipTile', { tileId: index });
 }
 
