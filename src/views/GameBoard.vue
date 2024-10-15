@@ -132,7 +132,14 @@ socket.on('noMatch', ({ tileId }) => [
 }
 
 .tile-img {
-    height: 150px;
-    width: 105px;
+  position: absolute;
+  top:0;
+  z-index: -1;
+
+  height: 150px;
+  width: 105px;
+
+  opacity: 0.8;
+  border-radius: var(--tile-b-rad);
 }
 </style>

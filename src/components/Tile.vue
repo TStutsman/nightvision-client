@@ -73,7 +73,8 @@ watch(() => props.illuminated == true, () => {
 }
 .tile-front {
     transform: rotateY(180deg);
-    background-color: var(--nv-c-grey);
+    background: linear-gradient(var(--nv-c-grey), #FFF);
+    /* background-color: var(--nv-c-lightgrey); */
 }
 .bright {
     background-color: var(--nv-c-lightgrey);
@@ -82,24 +83,23 @@ i {
   display: flex;
   place-items: center;
   place-content: center;
-  /* TODO: fix these later */
-  width: 32px; 
-  height: 32px;
 
   color: var(--color-text);
 }
 
 .tile-name {
+  height: 100%;
   display: flex;
-  place-items: center;
+  place-items: end;
   place-content: center;
 }
 
 h3 {
   font-size: 1.2rem;
-  font-weight: 500;
+  font-weight: 800;
   margin-bottom: 0.4rem;
-  color: var(--color-heading);
+  color: var(--nv-c-black);
+  filter: drop-shadow(0 0 2px #ddd);
   user-select: none;
 }
 
