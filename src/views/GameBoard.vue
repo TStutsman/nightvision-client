@@ -8,7 +8,6 @@ import { mountWebSocket } from '@/socket';
 import type { Ref } from 'vue';
 import { ref } from 'vue';
 import './../styles/base.css';
-import { watch } from 'vue';
 
 const { gameId } = defineProps<{
   gameId: number
@@ -31,9 +30,17 @@ socket.on('flipTile', ({ tileId, type }) => {
 
 });
 
-socket.on('noMatch', ({ tileId }) => [
-
-]);
+socket.on('noMatch', ({ tileId1, tileId2 }) => {
+  const tile1 = game.value.deck[tileId1];
+  const tile2 = game.value.deck[tileId2];
+  
+  setTimeout(() => {
+    tile1.revealed = false;
+    tile2.revealed = false;
+    tile1.type = '';
+    tile2.type = '';
+  }, 1500);
+});
 </script>
 
 <template>
