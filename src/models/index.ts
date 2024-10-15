@@ -15,7 +15,7 @@ export interface Game {
 
   activePlayer: number;
   players: Player[];
-  bearSpotted: boolean;
+  message: string;
 
   gameOver: boolean;
   endGameStatus: string;

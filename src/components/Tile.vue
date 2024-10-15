@@ -5,7 +5,7 @@ const props = defineProps<{
   revealed: boolean
   illuminated: boolean | undefined
 }>()
-const emit = defineEmits(['deilluminate', 'showTile']);
+const emit = defineEmits(['deilluminate', 'tileClick']);
 
 watch(() => props.illuminated == true, () => {
     setTimeout(() => {
@@ -16,7 +16,7 @@ watch(() => props.illuminated == true, () => {
 </script>
 
 <template>
-    <div @click="$emit('showTile')" class="tile-container" :class="{selectable:!revealed}">
+    <div @click="$emit('tileClick')" class="tile-container" :class="{selectable:!revealed}">
         <div class="tile">
             <div class="tile-inner" :class="{flipped:revealed, unflipped:!revealed}">
                 <div class="tile-back" :class="{bright:illuminated}"></div>

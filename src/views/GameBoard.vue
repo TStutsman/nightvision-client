@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { bearSpray, flashlight, reshuffle } from '@/actions/abilities';
 import { deilluminate, resetGame } from '@/actions/tiles';
 import { Ability, Inventory, Tile, UserScore } from '@/components';
 import EndGameView from './EndGameView.vue';
 import type { Game } from '@/models';
-import { mountWebSocket } from '@/socket';
+import { addActionHandlers, mountWebSocket } from '@/socket';
 import type { Ref } from 'vue';
 import { ref } from 'vue';
 import './../styles/base.css';
@@ -19,28 +18,23 @@ const r = await fetch(`/api/games/${gameId}`);
 const data = await r.json();
 const game:Ref<Game> = ref(data);
 
-function emitFlipTile(index: number) {
-  socket.emit('flipTile', { tileId: index });
+function emitTileClick(index: number) {
+  socket.emit('tileClick', { tileId: index });
 }
 
-socket.on('flipTile', ({ tileId, type }) => {
-  const tile = game.value.deck[tileId];
-  tile.revealed = true;
-  tile.type = type;
+function emitBearSpray() {
+  socket.emit('bearSpray', {});
+}
 
-});
+function emitFlashlight() {
+  socket.emit('flashlight', {});
+}
 
-socket.on('noMatch', ({ tileId1, tileId2 }) => {
-  const tile1 = game.value.deck[tileId1];
-  const tile2 = game.value.deck[tileId2];
-  
-  setTimeout(() => {
-    tile1.revealed = false;
-    tile2.revealed = false;
-    tile1.type = '';
-    tile2.type = '';
-  }, 1500);
-});
+function emitReshuffle() {
+  socket.emit('reshuffle', {});
+}
+
+addActionHandlers(socket, game);
 </script>
 
 <template>
@@ -52,7 +46,7 @@ socket.on('noMatch', ({ tileId1, tileId2 }) => {
       :key="index" 
       :revealed="tile.revealed"
       :illuminated="tile.illuminated"
-      @show-tile="emitFlipTile(index)"
+      @tile-click="emitTileClick(index)"
       @deilluminate="deilluminate(index)"
       >
       <template #icon>
@@ -69,22 +63,22 @@ socket.on('noMatch', ({ tileId1, tileId2 }) => {
     </Tile>
   </div>
 
-  <div class="bearWarning" :class="{hidden:!game?.bearSpotted, unhidden:game?.bearSpotted}">BEAR SPOTTED</div>
+  <div class="bearWarning" :class="{hidden:!game?.message?.length, unhidden:game?.message?.length}">{{game.message}}</div>
 
   <div class="abilities">
-    <Ability @flashlight="flashlight" ability="flashlight">
+    <Ability @flashlight="emitFlashlight" ability="flashlight">
       <template #name>FLASHLIGHT</template>
       <template #description>
         CHECK ONE ROW FOR BEARS
       </template>
     </Ability>
-    <Ability @bearSpray="bearSpray" ability="bearSpray">
+    <Ability @bearSpray="emitBearSpray" ability="bearSpray">
       <template #name>BEAR SPRAY</template>
       <template #description>
         PROTECTS FROM BEAR (LIMIT ONE AT A TIME)
       </template>
     </Ability>
-    <Ability @shuffle="reshuffle" ability="shuffle">
+    <Ability @shuffle="emitReshuffle" ability="shuffle">
       <template #name>SHUFFLE</template>
       <template #description>
         SHUFFLE THE DECK
