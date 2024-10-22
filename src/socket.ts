@@ -32,10 +32,13 @@ export function addActionHandlers(socket: VueSocket, game: Ref<Game>):void {
         const tile = game.value.deck[tileId];
         tile.revealed = true;
         tile.type = type;
+    });
+
+    socket.on('match', ({playerId, score}) => {
+        game.value.players[playerId].points = score
+    });
       
-      });
-      
-    socket.on('noMatch', ({ tileId1, tileId2 }) => {
+    socket.on('noMatch', ({ tileId1, tileId2, playerId }) => {
         const tile1 = game.value.deck[tileId1];
         const tile2 = game.value.deck[tileId2];
         
@@ -45,6 +48,13 @@ export function addActionHandlers(socket: VueSocket, game: Ref<Game>):void {
             tile1.type = '';
             tile2.type = '';
         }, 1500);
+
+        game.value.activePlayer = playerId - 1;
+    });
+
+    socket.on('endGame', ({endGameStatus}) => {
+        game.value.gameOver = true;
+        game.value.endGameStatus = endGameStatus;
     });
 
     socket.on('playerError', ({ message }) => {
