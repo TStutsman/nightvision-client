@@ -14,7 +14,7 @@ export interface Game {
   id: number;
 
   activePlayer: number;
-  players: Player[];
+  players: { [id:number]: Player };
   message: string;
 
   gameOver: boolean;

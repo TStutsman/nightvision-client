@@ -87,10 +87,10 @@ addActionHandlers(socket, game);
   </div>
 
   <div class="scoreboard">
-    <Inventory :hasSpray="game?.players[0].hasSpray"/>
-    <UserScore :turn="game?.activePlayer == 0" :player="1" :score="game?.players[0].points"/>
-    <UserScore :turn="game?.activePlayer == 1" :player="2" :score="game?.players[1].points"/>
     <Inventory :hasSpray="game?.players[1].hasSpray"/>
+    <UserScore :turn="game?.activePlayer == 1" :player="1" :score="game?.players[1].points"/>
+    <UserScore :turn="game?.activePlayer == 2" :player="2" :score="game?.players[2].points"/>
+    <Inventory :hasSpray="game?.players[2].hasSpray"/>
   </div>
 </template>
 

@@ -28,7 +28,7 @@ export class VueSocket extends WebSocket {
     }
 
     handleEvent(event: MessageEvent):void {
-        const { actionType, data } = JSON.parse(event.data);
+        const { actionType, ...data } = JSON.parse(event.data);
         const handler = this.events[actionType];
         handler(data);
     }

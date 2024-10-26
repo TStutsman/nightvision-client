@@ -28,17 +28,20 @@ export function mountWebSocket(gameId:number):Promise<VueSocket> {
  * Updates the game state directly, causing rerender of necessary components
  */
 export function addActionHandlers(socket: VueSocket, game: Ref<Game>):void {
-    socket.on('tileClick', ({ tileId, type }) => {
+    socket.on('tileClick', ({ data }) => {
+        const { id: tileId, type } = data;
         const tile = game.value.deck[tileId];
         tile.revealed = true;
         tile.type = type;
     });
 
-    socket.on('match', ({playerId, score}) => {
-        game.value.players[playerId].points = score
+    socket.on('match', ({ data }) => {
+        const { playerId, score } = data;
+        game.value.players[playerId].points = score;
     });
       
-    socket.on('noMatch', ({ tileId1, tileId2, playerId }) => {
+    socket.on('noMatch', ({ data }) => {
+        const { tileId1, tileId2, nextPlayerId } = data;
         const tile1 = game.value.deck[tileId1];
         const tile2 = game.value.deck[tileId2];
         
@@ -47,14 +50,18 @@ export function addActionHandlers(socket: VueSocket, game: Ref<Game>):void {
             tile2.revealed = false;
             tile1.type = '';
             tile2.type = '';
+            game.value.activePlayer = nextPlayerId;
         }, 1500);
-
-        game.value.activePlayer = playerId - 1;
     });
 
-    socket.on('endGame', ({endGameStatus}) => {
+    socket.on('bearSpray', ({ playerId, nextPlayerId }) => {
+        game.value.players[playerId].hasSpray = true;
+        game.value.activePlayer = nextPlayerId;
+    });
+
+    socket.on('endGame', ({ message }) => {
         game.value.gameOver = true;
-        game.value.endGameStatus = endGameStatus;
+        game.value.endGameStatus = message;
     });
 
     socket.on('playerError', ({ message }) => {
