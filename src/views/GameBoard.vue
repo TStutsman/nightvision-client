@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { deilluminate, resetGame } from '@/actions/tiles';
+import { deilluminate } from '@/actions/tiles';
 import { Ability, Inventory, Tile, UserScore } from '@/components';
 import EndGameView from './EndGameView.vue';
 import type { Game } from '@/models';
@@ -34,12 +34,16 @@ function emitReshuffle() {
   socket.emit('reshuffle', {});
 }
 
+function emitPlayAgain() {
+  socket.emit('playAgain', {});
+}
+
 addActionHandlers(socket, game);
 </script>
 
 <template>
   <div class="board">
-    <EndGameView v-if="game?.gameOver" @play-again="resetGame" :endGameState="game?.endGameStatus"/>
+    <EndGameView v-if="game?.gameOver" @play-again="emitPlayAgain" :endGameState="game?.endGameStatus"/>
     
     <Tile 
       v-for="(tile, index) in game?.deck"

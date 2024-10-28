@@ -54,15 +54,25 @@ export function addActionHandlers(socket: VueSocket, game: Ref<Game>):void {
         }, 1500);
     });
 
-    socket.on('bearSpray', ({ playerId, nextPlayerId }) => {
+    socket.on('bearSpray', ({ data }) => {
+        const { playerId, nextPlayerId } = data;
         game.value.players[playerId].hasSpray = true;
         game.value.activePlayer = nextPlayerId;
+    });
+
+    socket.on('bearSprayUsed', ({ data }) => {
+        const { playerId } = data;
+        game.value.players[playerId].hasSpray = false;
     });
 
     socket.on('endGame', ({ message }) => {
         game.value.gameOver = true;
         game.value.endGameStatus = message;
     });
+
+    socket.on('gameReset', ({ data }) => {
+        game.value = data;
+    })
 
     socket.on('playerError', ({ message }) => {
         game.value.message = message;
