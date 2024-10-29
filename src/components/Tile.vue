@@ -22,11 +22,11 @@ watch(() => props.illuminated == true, () => {
                 <div class="tile-back" :class="{bright:illuminated}"></div>
                 <div class="tile-front">
                     <i :class="{hidden:!revealed, unhidden:revealed}">
-                        <slot v-if="revealed" name="icon"></slot>
+                        <slot name="icon"></slot>
                     </i>
                     <div class="tile-name" :class="{hidden:!revealed, unhidden:revealed}">
                         <h3>
-                            <slot v-if="revealed" name="description"></slot>
+                            <slot name="description"></slot>
                         </h3>
                     </div>
                 </div>
@@ -73,8 +73,10 @@ watch(() => props.illuminated == true, () => {
 }
 .tile-front {
     transform: rotateY(180deg);
+    background-color: var(--nv-c-grey);
+}
+.tile-front:has(i.unhidden){
     background: linear-gradient(var(--nv-c-grey), #FFF);
-    /* background-color: var(--nv-c-lightgrey); */
 }
 .bright {
     background-color: var(--nv-c-lightgrey);

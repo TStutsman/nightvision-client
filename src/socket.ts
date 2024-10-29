@@ -54,6 +54,14 @@ export function addActionHandlers(socket: VueSocket, game: Ref<Game>):void {
         }, 1500);
     });
 
+    socket.on('flashlight', () => {
+        // !!! TODO: what happens when they turn on the flashlight? !!!
+    });
+
+    socket.on('flashlightUsed', ({ message }) => {
+        game.value.message = message;
+    });
+
     socket.on('bearSpray', ({ data }) => {
         const { playerId, nextPlayerId } = data;
         game.value.players[playerId].hasSpray = true;
@@ -63,6 +71,11 @@ export function addActionHandlers(socket: VueSocket, game: Ref<Game>):void {
     socket.on('bearSprayUsed', ({ data }) => {
         const { playerId } = data;
         game.value.players[playerId].hasSpray = false;
+    });
+
+    socket.on('reshuffled', ({ data }) => {
+        const { deck } = data;
+        game.value.deck = deck;
     });
 
     socket.on('endGame', ({ message }) => {

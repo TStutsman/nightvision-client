@@ -54,9 +54,8 @@ addActionHandlers(socket, game);
       @deilluminate="deilluminate(index)"
       >
       <template #icon>
-        <!-- icons for cards go here once i make them -->
         <img 
-          v-bind:src="'https://nmls-pictures-bucket.s3.us-east-2.amazonaws.com/rainier_' + tile.type.toLowerCase() + '.jpg'" 
+          v-bind:src="tile.type ? 'https://nmls-pictures-bucket.s3.us-east-2.amazonaws.com/rainier_' + tile.type.toLowerCase() + '.jpg' : ''" 
           v-bind:alt="tile.type"
           class="tile-img"
         />
