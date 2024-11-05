@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { deilluminate } from '@/actions/tiles';
 import { Ability, Inventory, Tile, UserScore } from '@/components';
-import EndGameView from './EndGameView.vue';
 import type { Game } from '@/models';
 import { addActionHandlers, mountWebSocket } from '@/socket';
 import type { Ref } from 'vue';
 import { ref } from 'vue';
 import './../styles/base.css';
+import EndGameView from './EndGameView.vue';
 
 const { gameId } = defineProps<{
   gameId: number
@@ -36,6 +35,10 @@ function emitReshuffle() {
 
 function emitPlayAgain() {
   socket.emit('playAgain', {});
+}
+
+function deilluminate(id: number) {
+  game.value.deck[id].illuminated = false;
 }
 
 addActionHandlers(socket, game);
@@ -113,12 +116,7 @@ addActionHandlers(socket, game);
   width: 100%;
   color: var(--nv-c-green);
 }
-.hidden {
-  visibility: hidden;
-}
-.unhidden {
-  visibility: visible;
-}
+
 
 .abilities {
   display: flex;

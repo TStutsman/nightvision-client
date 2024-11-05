@@ -1,5 +1,5 @@
-import type { Game } from "./models";
 import type { Ref } from 'vue';
+import type { Game } from "./models";
 import { VueSocket } from "./VueSocket";
 
 /**
@@ -11,7 +11,7 @@ import { VueSocket } from "./VueSocket";
 export function mountWebSocket(gameId:number):Promise<VueSocket> {
     const openSocket = new Promise<VueSocket>((resolve, reject) => {
         try {
-            const socket = new VueSocket(`ws://localhost:8080/api/games/${gameId}`);
+            const socket = new VueSocket(`ws://localhost:8080/api/games/${gameId}`, ['json']);
             socket.onopen = () => resolve(socket);
         } catch (err) {
             console.log(err);
@@ -58,8 +58,16 @@ export function addActionHandlers(socket: VueSocket, game: Ref<Game>):void {
         // !!! TODO: what happens when they turn on the flashlight? !!!
     });
 
-    socket.on('flashlightUsed', ({ message }) => {
+    socket.on('flashlightUsed', ({ message, data }) => {
         game.value.message = message;
+
+        const { rowFirstIndex } = data;
+        const { deck } = game.value;
+        for(let i = 0; i < 7; i++){
+            setTimeout(() => {
+                deck[i + rowFirstIndex].illuminated = true;
+            }, 75*i);
+        }
     });
 
     socket.on('bearSpray', ({ data }) => {

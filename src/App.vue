@@ -1,23 +1,43 @@
 <script setup lang="ts">
-import GameBoard from './views/GameBoard.vue';
+import type { Ref } from 'vue';
+import { ref } from 'vue';
 import GameHeading from './components/GameHeading.vue';
-import { initNewGame } from './actions/newGame';
+import GameBoard from './views/GameBoard.vue';
+import LandingPage from './views/LandingPage.vue';
 
-const game = initNewGame();
+const gameId:Ref<number> = ref(-1);
+
+async function connect():Promise<void> {
+  const res = await fetch('/api/session/connect');
+  const data = await res.json();
+  gameId.value = +data.gameId;
+}
+connect();
+
+async function enterNewGame():Promise<void> {
+  const res = await fetch('/api/games/new');
+  const data = await res.json();
+  gameId.value = +data.gameId;
+}
+
+function joinGame(id:number):void {
+  gameId.value = id;
+}
+
 </script>
 
 <template>
   <header>
     <div class="wrapper">
-      <!-- this will be the heading above the board -->
       <GameHeading />
     </div>
   </header>
 
   <main>
+    <LandingPage v-if="gameId === -1" @newGame="enterNewGame" @joinGame="joinGame"/>
     <!-- this will be the game 'board' -->
-    <Suspense>
-      <GameBoard :gameId="game.id"/>
+    <Suspense v-if="gameId !== -1">
+      <GameBoard :gameId="gameId"/>
 
       <template #fallback>
         Loading...
