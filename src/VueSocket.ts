@@ -1,5 +1,3 @@
-import { getCookie } from "./utils/cookie";
-
 export class VueSocket extends WebSocket {
     events:{ [eventName:string]: (data:object) => any};
 
@@ -12,9 +10,8 @@ export class VueSocket extends WebSocket {
 
     emit(eventName:string, data:any):void {
         if (this.readyState !== this.OPEN) return;
-        
-        const token = getCookie('session');
-        const res = JSON.stringify({event: eventName, data, token});
+
+        const res = JSON.stringify({ event: eventName, data });
         super.send(res);
     }
 

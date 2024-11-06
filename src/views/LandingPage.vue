@@ -14,8 +14,7 @@ const newGame = () => {
 }
 
 const joinGame = () => {
-    const gameId = Number(inputValue.value);
-    console.log(inputValue);
+    const gameId = inputValue.value;
     emit('joinGame', gameId);
 }
 </script>
@@ -28,7 +27,7 @@ const joinGame = () => {
         </div>
         <div id="input-section" v-if="showIdInput">
             <input type="text" v-model="inputValue">
-            <button @click="joinGame">GO</button>
+            <button @click="joinGame">Go</button>
         </div>
     </div>
 </template>

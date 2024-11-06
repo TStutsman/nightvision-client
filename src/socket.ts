@@ -8,7 +8,7 @@ import { VueSocket } from "./VueSocket";
  * @param gameId - the id of the game to use for the socket url
  * @returns a Promise that resolves into an open VueSocket
  */
-export function mountWebSocket(gameId:number):Promise<VueSocket> {
+export function mountWebSocket(gameId:string):Promise<VueSocket> {
     const openSocket = new Promise<VueSocket>((resolve, reject) => {
         try {
             const socket = new VueSocket(`ws://localhost:8080/api/games/${gameId}`, ['json']);

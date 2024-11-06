@@ -5,22 +5,22 @@ import GameHeading from './components/GameHeading.vue';
 import GameBoard from './views/GameBoard.vue';
 import LandingPage from './views/LandingPage.vue';
 
-const gameId:Ref<number> = ref(-1);
+const gameId:Ref<string> = ref('');
 
 async function connect():Promise<void> {
   const res = await fetch('/api/session/connect');
   const data = await res.json();
-  gameId.value = +data.gameId;
+  gameId.value = data.gameId;
 }
 connect();
 
 async function enterNewGame():Promise<void> {
   const res = await fetch('/api/games/new');
   const data = await res.json();
-  gameId.value = +data.gameId;
+  gameId.value = data.gameId;
 }
 
-function joinGame(id:number):void {
+function joinGame(id:string):void {
   gameId.value = id;
 }
 
@@ -29,14 +29,14 @@ function joinGame(id:number):void {
 <template>
   <header>
     <div class="wrapper">
-      <GameHeading />
+      <GameHeading :gameId="gameId"/>
     </div>
   </header>
 
   <main>
-    <LandingPage v-if="gameId === -1" @newGame="enterNewGame" @joinGame="joinGame"/>
+    <LandingPage v-if="gameId === ''" @newGame="enterNewGame" @joinGame="joinGame"/>
     <!-- this will be the game 'board' -->
-    <Suspense v-if="gameId !== -1">
+    <Suspense v-if="gameId !== ''">
       <GameBoard :gameId="gameId"/>
 
       <template #fallback>

@@ -8,7 +8,7 @@ import './../styles/base.css';
 import EndGameView from './EndGameView.vue';
 
 const { gameId } = defineProps<{
-  gameId: number
+  gameId: string
 }>();
 
 const socket = await mountWebSocket(gameId);

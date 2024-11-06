@@ -1,5 +1,12 @@
+<script setup lang="ts">
+const { gameId } = defineProps<{
+  gameId: string
+}>();
+</script>
+
 <template>
-  <div class="greetings">
+  <div class="header">
+    <h2 v-if="gameId !== ''" id="game-code">Game Code: {{ gameId }}</h2>
     <h1 class="green">NIGHT VISION</h1>
   </div>
 </template>
@@ -12,9 +19,16 @@ h1 {
   top: -10px;
 }
 
-.greetings h1,
-.greetings h3 {
-  text-align: center;
+.header {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+#game-code {
+  position: absolute;
+  top: 1em;
+  left: 1em;
 }
 
 .green {
