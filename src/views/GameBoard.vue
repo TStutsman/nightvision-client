@@ -11,12 +11,13 @@ const { gameId } = defineProps<{
   gameId: string
 }>();
 
-const socket = await mountWebSocket(gameId);
-
 const r = await fetch(`/api/games/${gameId}`);
 const data = await r.json();
 const game:Ref<Game> = ref(data);
 
+// Mount the websocket after recieving the game data
+const socket = await mountWebSocket(gameId);
+  
 function emitTileClick(index: number) {
   socket.emit('tileClick', { tileId: index });
 }
