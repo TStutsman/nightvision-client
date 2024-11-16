@@ -11,7 +11,7 @@ import { VueSocket } from "./VueSocket";
 export function mountWebSocket(gameId:string):Promise<VueSocket> {
     const openSocket = new Promise<VueSocket>((resolve, reject) => {
         try {
-            const socket = new VueSocket(`ws://localhost:8080/api/games/${gameId}`, ['json']);
+            const socket = new VueSocket(location.origin.replace('\^http', 'ws') + `/api/games/${gameId}`, ['json']);
             socket.onopen = () => resolve(socket);
         } catch (err) {
             console.log(err);
