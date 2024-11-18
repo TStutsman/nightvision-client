@@ -2,6 +2,8 @@ import type { Ref } from 'vue';
 import type { Game } from "./models";
 import { VueSocket } from "./VueSocket";
 
+const origin = import.meta.env.MODE === 'development' ? 'ws://localhost:8080' : location.origin.replace('\^http', 'ws');
+
 /**
  * Creates the WebSocket instance on the unique url of the new game
  * 
@@ -11,7 +13,7 @@ import { VueSocket } from "./VueSocket";
 export function mountWebSocket(gameId:string):Promise<VueSocket> {
     const openSocket = new Promise<VueSocket>((resolve, reject) => {
         try {
-            const socket = new VueSocket(location.origin.replace('\^http', 'ws') + `/api/games/${gameId}`, ['json']);
+            const socket = new VueSocket(origin + `/api/games/${gameId}`, ['json']);
             socket.onopen = () => resolve(socket);
         } catch (err) {
             console.log(err);
