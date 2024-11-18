@@ -101,3 +101,30 @@ export function addActionHandlers(socket: VueSocket, game: Ref<Game>):void {
         game.value.message = message;
     });
 }
+
+interface Emitter {
+    (index:number): void
+}
+export function addActionEmitters(socket: VueSocket):{[name:string]: Emitter} {
+    function emitTileClick(index: number) {
+        socket.emit('tileClick', { tileId: index });
+    }
+    
+    function emitBearSpray() {
+        socket.emit('bearSpray', {});
+    }
+    
+    function emitFlashlight() {
+        socket.emit('flashlight', {});
+    }
+    
+    function emitReshuffle() {
+        socket.emit('reshuffle', {});
+    }
+    
+    function emitPlayAgain() {
+        socket.emit('playAgain', {});
+    }
+
+    return { emitTileClick, emitBearSpray, emitFlashlight, emitReshuffle, emitPlayAgain };
+}

@@ -1,47 +1,27 @@
 <script setup lang="ts">
 import { Ability, Inventory, Tile, UserScore } from '@/components';
 import type { Game } from '@/models';
-import { addActionHandlers, mountWebSocket } from '@/socket';
+import { addActionEmitters, addActionHandlers, mountWebSocket } from '@/socket';
 import type { Ref } from 'vue';
 import { ref } from 'vue';
 import './../styles/base.css';
 import EndGameView from './EndGameView.vue';
 
-const { gameId } = defineProps<{
-  gameId: string
+const { gameId, newGame } = defineProps<{
+  gameId: string, newGame: Game
 }>();
 
-const r = await fetch(`/api/games/${gameId}`);
-const data = await r.json();
-const game:Ref<Game> = ref(data);
+console.log(newGame);
+const game:Ref<Game> = ref(newGame);
 
 // Mount the websocket after recieving the game data
 const socket = await mountWebSocket(gameId);
-  
-function emitTileClick(index: number) {
-  socket.emit('tileClick', { tileId: index });
-}
-
-function emitBearSpray() {
-  socket.emit('bearSpray', {});
-}
-
-function emitFlashlight() {
-  socket.emit('flashlight', {});
-}
-
-function emitReshuffle() {
-  socket.emit('reshuffle', {});
-}
-
-function emitPlayAgain() {
-  socket.emit('playAgain', {});
-}
 
 function deilluminate(id: number) {
   game.value.deck[id].illuminated = false;
 }
 
+const { emitTileClick, emitBearSpray, emitFlashlight, emitReshuffle, emitPlayAgain } = addActionEmitters(socket);
 addActionHandlers(socket, game);
 </script>
 
