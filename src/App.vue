@@ -1,17 +1,23 @@
 <script setup lang="ts">
 import type { Ref } from 'vue';
-import type { Game } from '@/models';
+import type { Game } from '@/types';
 import { ref } from 'vue';
 import GameHeading from './components/GameHeading.vue';
 import GameBoard from './views/GameBoard.vue';
 import LandingPage from './views/LandingPage.vue';
+import type { EventSocket } from './socket/EventSocket';
+import { mountEventSocket } from './socket/socket';
 
 const gameId:Ref<string> = ref('');
 const game:Ref<Game | null> = ref(null);
+const socket:Ref<EventSocket | null> = ref(null);
 
 async function connect():Promise<void> {
   const res = await fetch('/api/session/connect');
   const data = await res.json();
+  if(data.gameId !== ''){
+    await joinGame(data.gameId);
+  }
   gameId.value = data.gameId;
 }
 connect();
@@ -19,6 +25,7 @@ connect();
 async function enterNewGame():Promise<void> {
   const res = await fetch('/api/games/new');
   const data = await res.json();
+  socket.value = await mountEventSocket(`/api/games/${data.gameId}`);
   game.value = data.game;
   gameId.value = data.gameId;
 }
@@ -26,6 +33,7 @@ async function enterNewGame():Promise<void> {
 async function joinGame(id:string):Promise<void> {
   const res = await fetch(`/api/games/${id}`);
   const data = await res.json();
+  socket.value = await mountEventSocket(`/api/games/${id}`);
   game.value = data;
   gameId.value = id;
 }
@@ -47,14 +55,11 @@ async function leaveGame():Promise<void> {
 
   <main>
     <LandingPage v-if="gameId === ''" @newGame="enterNewGame" @joinGame="joinGame"/>
-    <!-- this will be the game 'board' -->
-    <Suspense v-if="gameId !== '' && game">
-      <GameBoard :gameId="gameId" :new-game="game"/>
+    <GameBoard v-if="game && socket" :new-game="game" :socket="socket"/>
 
-      <template #fallback>
-        Loading...
-      </template>
-    </Suspense>
+    <div v-if="gameId && (!game || !socket)">
+      Loading...
+    </div>
   </main>
 </template>
 

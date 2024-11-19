@@ -1,40 +1,36 @@
 <script setup lang="ts">
 import { Ability, Inventory, Tile, UserScore } from '@/components';
-import type { Game } from '@/models';
-import { addActionEmitters, addActionHandlers, mountWebSocket } from '@/socket';
+import type { EventSocket } from '@/socket/EventSocket';
+import { addActionHandlers } from '@/socket/socket';
+import type { Game } from '@/types';
 import type { Ref } from 'vue';
 import { ref } from 'vue';
 import './../styles/base.css';
 import EndGameView from './EndGameView.vue';
 
-const { gameId, newGame } = defineProps<{
-  gameId: string, newGame: Game
+const { newGame, socket } = defineProps<{
+  newGame: Game, socket: EventSocket
 }>();
 
-console.log(newGame);
 const game:Ref<Game> = ref(newGame);
-
-// Mount the websocket after recieving the game data
-const socket = await mountWebSocket(gameId);
 
 function deilluminate(id: number) {
   game.value.deck[id].illuminated = false;
 }
 
-const { emitTileClick, emitBearSpray, emitFlashlight, emitReshuffle, emitPlayAgain } = addActionEmitters(socket);
 addActionHandlers(socket, game);
 </script>
 
 <template>
   <div class="board">
-    <EndGameView v-if="game?.gameOver" @play-again="emitPlayAgain" :endGameState="game?.endGameStatus"/>
+    <EndGameView v-if="game?.gameOver" @play-again="socket.emit('playAgain')" :endGameState="game?.endGameStatus"/>
     
     <Tile 
       v-for="(tile, index) in game?.deck"
       :key="index" 
       :revealed="tile.revealed"
       :illuminated="tile.illuminated"
-      @tile-click="emitTileClick(index)"
+      @tile-click="socket.emit('tileClick', {tileId: index})"
       @deilluminate="deilluminate(index)"
       >
       <template #icon>
@@ -53,19 +49,19 @@ addActionHandlers(socket, game);
   <div class="bearWarning" :class="{hidden:!game?.message?.length, unhidden:game?.message?.length}">{{game.message}}</div>
 
   <div class="abilities">
-    <Ability @flashlight="emitFlashlight" ability="flashlight">
+    <Ability @flashlight="socket.emit('flashlight')" ability="flashlight">
       <template #name>FLASHLIGHT</template>
       <template #description>
         CHECK ONE ROW FOR BEARS
       </template>
     </Ability>
-    <Ability @bearSpray="emitBearSpray" ability="bearSpray">
+    <Ability @bearSpray="socket.emit('bearSpray')" ability="bearSpray">
       <template #name>BEAR SPRAY</template>
       <template #description>
         PROTECTS FROM BEAR (LIMIT ONE AT A TIME)
       </template>
     </Ability>
-    <Ability @shuffle="emitReshuffle" ability="shuffle">
+    <Ability @shuffle="socket.emit('reshuffle')" ability="shuffle">
       <template #name>SHUFFLE</template>
       <template #description>
         SHUFFLE THE DECK

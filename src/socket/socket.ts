@@ -1,19 +1,19 @@
 import type { Ref } from 'vue';
-import type { Game } from "./models";
-import { VueSocket } from "./VueSocket";
+import type { Game } from "../types";
+import { EventSocket } from "./EventSocket";
 
 const origin = import.meta.env.MODE === 'development' ? 'ws://localhost:8080' : location.origin.replace('\^http', 'ws');
 
 /**
  * Creates the WebSocket instance on the unique url of the new game
  * 
- * @param gameId - the id of the game to use for the socket url
- * @returns a Promise that resolves into an open VueSocket
+ * @param url - the relative url to establish the websocket connection
+ * @returns a Promise that resolves into an open EventSocket
  */
-export function mountWebSocket(gameId:string):Promise<VueSocket> {
-    const openSocket = new Promise<VueSocket>((resolve, reject) => {
+export function mountEventSocket(url:string):Promise<EventSocket> {
+    const openSocket = new Promise<EventSocket>((resolve, reject) => {
         try {
-            const socket = new VueSocket(origin + `/api/games/${gameId}`, ['json']);
+            const socket = new EventSocket(origin + url, ['json']);
             socket.onopen = () => resolve(socket);
         } catch (err) {
             console.log(err);
@@ -29,7 +29,7 @@ export function mountWebSocket(gameId:string):Promise<VueSocket> {
  * 
  * Updates the game state directly, causing rerender of necessary components
  */
-export function addActionHandlers(socket: VueSocket, game: Ref<Game>):void {
+export function addActionHandlers(socket: EventSocket, game: Ref<Game>):void {
     socket.on('tileClick', ({ data }) => {
         const { id: tileId, type } = data;
         const tile = game.value.deck[tileId];
@@ -99,32 +99,9 @@ export function addActionHandlers(socket: VueSocket, game: Ref<Game>):void {
 
     socket.on('playerError', ({ message }) => {
         game.value.message = message;
+
+        setTimeout(() => {
+            game.value.message = '';
+        }, 3000);
     });
-}
-
-interface Emitter {
-    (index:number): void
-}
-export function addActionEmitters(socket: VueSocket):{[name:string]: Emitter} {
-    function emitTileClick(index: number) {
-        socket.emit('tileClick', { tileId: index });
-    }
-    
-    function emitBearSpray() {
-        socket.emit('bearSpray', {});
-    }
-    
-    function emitFlashlight() {
-        socket.emit('flashlight', {});
-    }
-    
-    function emitReshuffle() {
-        socket.emit('reshuffle', {});
-    }
-    
-    function emitPlayAgain() {
-        socket.emit('playAgain', {});
-    }
-
-    return { emitTileClick, emitBearSpray, emitFlashlight, emitReshuffle, emitPlayAgain };
 }
