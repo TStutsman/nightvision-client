@@ -1,9 +1,9 @@
 export class EventSocket extends WebSocket {
-    events:{ [eventName:string]: (data:object) => any};
+    listeners:{ [eventName:string]: (data:object) => any};
 
     constructor(url:string, protocols:string[] = []) {
         super(url, protocols);
-        this.events = {};
+        this.listeners = {};
         this.onclose = (e: CloseEvent) => console.log(e);
         this.onmessage = (e: MessageEvent) => this.routeEvent(e);
     }
@@ -33,7 +33,7 @@ export class EventSocket extends WebSocket {
      * @param listener - the listener function to evoke
      */
     on(eventName:string, listener:(data:any) => any):void {
-        this.events[eventName] = listener;
+        this.listeners[eventName] = listener;
     }
 
     /**
@@ -45,12 +45,12 @@ export class EventSocket extends WebSocket {
     routeEvent(event: MessageEvent):void {
         const { actionType, ...data } = JSON.parse(event.data);
 
-        if(this.events[actionType] === undefined) {
+        if(this.listeners[actionType] === undefined) {
             console.log(`Action type \x1b[33m${actionType}\x1b[0m has no listener function`);
             return;
         }
 
-        const listener = this.events[actionType];
+        const listener = this.listeners[actionType];
         listener(data);
     }
 }
