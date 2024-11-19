@@ -1,23 +1,18 @@
 <script setup lang="ts">
 import { Ability, Inventory, Tile, UserScore } from '@/components';
-import type { EventSocket } from '@/socket/EventSocket';
+import type { EventSocket } from '../socket';
 import type { Game } from '@/types';
 import type { Ref } from 'vue';
-import { ref, watchEffect } from 'vue';
+import { ref } from 'vue';
 import './../styles/base.css';
 import EndGameView from './EndGameView.vue';
 
-const { newGame, socket } = defineProps<{
-  newGame: Game, socket: EventSocket
-}>();
+const { newGame, socket } = defineProps<{newGame: Game, socket: EventSocket}>();
 
 const game:Ref<Game> = ref(newGame);
-
-function deilluminate(id: number) {
-  game.value.deck[id].illuminated = false;
-}
-
 socket.attach(game);
+
+const deilluminate = (id: number) => game.value.deck[id].illuminated = false;
 </script>
 
 <template>

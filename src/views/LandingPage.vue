@@ -2,21 +2,15 @@
 import type { Ref } from 'vue';
 import { ref } from 'vue';
 
-const emit = defineEmits(['newGame', 'joinGame']);
+const emit = defineEmits(['joinGame']);
 
 const showIdInput:Ref<boolean> = ref(false);
 const inputValue:Ref<string> = ref('');
 
 const showGameInput = () => showIdInput.value = true;
 
-const newGame = () => {
-    emit('newGame');
-}
-
-const joinGame = () => {
-    const gameId = inputValue.value;
-    emit('joinGame', gameId);
-}
+const newGame = () => emit('joinGame');
+const joinGame = () => emit('joinGame', inputValue.value);
 </script>
 
 <template>

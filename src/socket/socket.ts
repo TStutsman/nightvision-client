@@ -1,6 +1,5 @@
 import { EventSocket } from "./EventSocket";
 
-const origin = import.meta.env.MODE === 'development' ? 'ws://localhost:8080' : location.origin.replace('\^http', 'ws');
 const socket = new EventSocket();
 
 socket.on('tileClick', (game, { data }) => {
@@ -78,13 +77,15 @@ socket.on('playerError', (game, { message }) => {
     }, 3000);
 });
 
+
+const origin = import.meta.env.MODE === 'development' ? 'ws://localhost:8080' : location.origin.replace('\^http', 'ws');
 /**
  * Creates the WebSocket instance on the unique url of the new game
  * 
  * @param url - the relative url to establish the websocket connection
  * @returns a Promise that resolves into an open EventSocket
  */
-export function mountEventSocket(url:string):Promise<EventSocket> {
+export function initEventSocket(url:string):Promise<EventSocket> {
     const openSocket = new Promise<EventSocket>((resolve, reject) => {
         try {
             socket.onopen = () => resolve(socket);

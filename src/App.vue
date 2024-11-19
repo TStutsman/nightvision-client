@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import type { Ref } from 'vue';
 import type { Game } from '@/types';
+import type { Ref } from 'vue';
 import { ref } from 'vue';
 import GameHeading from './components/GameHeading.vue';
+import { EventSocket, initEventSocket } from './socket';
 import GameBoard from './views/GameBoard.vue';
 import LandingPage from './views/LandingPage.vue';
-import type { EventSocket } from './socket/EventSocket';
-import { mountEventSocket } from './socket/socket';
 
 const gameId:Ref<string> = ref('');
 const game:Ref<Game | null> = ref(null);
@@ -18,32 +17,24 @@ async function connect():Promise<void> {
   if(data.gameId !== ''){
     await joinGame(data.gameId);
   }
-  gameId.value = data.gameId;
 }
+
 connect();
 
-async function enterNewGame():Promise<void> {
-  const res = await fetch('/api/games/new');
+async function joinGame(id?:string):Promise<void> {
+  const res = await fetch(`/api/games/${id || "new"}`);
   const data = await res.json();
-  socket.value = await mountEventSocket(`/api/games/${data.gameId}`);
+  socket.value = await initEventSocket(`/api/games/${data.gameId}`);
   game.value = data.game;
   gameId.value = data.gameId;
 }
 
-async function joinGame(id:string):Promise<void> {
-  const res = await fetch(`/api/games/${id}`);
-  const data = await res.json();
-  socket.value = await mountEventSocket(`/api/games/${id}`);
-  game.value = data;
-  gameId.value = id;
-}
-
 async function leaveGame():Promise<void> {
   const res = await fetch('/api/games/leave');
-  await res.json();
-  gameId.value = '';
+  if(res.status < 300){
+    gameId.value = '';
+  }
 }
-
 </script>
 
 <template>
@@ -54,8 +45,8 @@ async function leaveGame():Promise<void> {
   </header>
 
   <main>
-    <LandingPage v-if="gameId === ''" @newGame="enterNewGame" @joinGame="joinGame"/>
-    <GameBoard v-if="!!gameId.length && game && socket" :new-game="game" :socket="socket"/>
+    <LandingPage v-if="gameId === ''" @joinGame="joinGame"/>
+    <GameBoard v-if="gameId && game && socket" :new-game="game" :socket="socket"/>
 
     <div v-if="gameId && (!game || !socket)">
       Loading...

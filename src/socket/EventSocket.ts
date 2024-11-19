@@ -73,7 +73,7 @@ export class EventSocket {
     }
 
     /**
-     * Attaches the event listeners to the game instance that Vue is watching
+     * Attaches the event listeners to the game reference that Vue is watching
      * to perform DOM updates
      * 
      * @param game - the game object that Vue is watching
