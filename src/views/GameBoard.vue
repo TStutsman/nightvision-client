@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { Ability, Inventory, Tile, UserScore } from '@/components';
 import type { EventSocket } from '@/socket/EventSocket';
-import { addActionHandlers } from '@/socket/socket';
 import type { Game } from '@/types';
 import type { Ref } from 'vue';
-import { ref } from 'vue';
+import { ref, watchEffect } from 'vue';
 import './../styles/base.css';
 import EndGameView from './EndGameView.vue';
 
@@ -18,7 +17,7 @@ function deilluminate(id: number) {
   game.value.deck[id].illuminated = false;
 }
 
-addActionHandlers(socket, game);
+socket.attach(game);
 </script>
 
 <template>

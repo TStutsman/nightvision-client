@@ -10,7 +10,7 @@ export interface Player {
   points: number
 }
 
-export interface Game {
+export interface Game extends Object {
   id: number;
 
   activePlayer: number;

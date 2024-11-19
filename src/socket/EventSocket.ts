@@ -1,11 +1,17 @@
-export class EventSocket extends WebSocket {
-    listeners:{ [eventName:string]: (data:object) => any};
+import type { Game } from "@/types";
+import type { Ref } from "vue";
 
-    constructor(url:string, protocols:string[] = []) {
-        super(url, protocols);
+export class EventSocket {
+    socket: WebSocket | null;
+    game: Ref<Game> | null;
+    onopen: ((this: WebSocket, ev: Event) => any) | null;
+    listeners:{ [eventName:string]: (game:Ref<Game>, data:object) => any};
+
+    constructor() {
+        this.socket = null;
+        this.onopen = null;
+        this.game = null;
         this.listeners = {};
-        this.onclose = (e: CloseEvent) => console.log(e);
-        this.onmessage = (e: MessageEvent) => this.routeEvent(e);
     }
 
     /**
@@ -19,10 +25,12 @@ export class EventSocket extends WebSocket {
     emit(eventName:string):void;
     emit(eventName:string, data:any):void;
     emit(eventName:string, data?:any):void {
-        if (this.readyState !== this.OPEN) return;
+        if(!this.socket) return;
+
+        if (this.socket.readyState !== this.socket.OPEN) return;
 
         const res = JSON.stringify({ event: eventName, data });
-        super.send(res);
+        this.socket.send(res);
     }
 
     /**
@@ -32,7 +40,7 @@ export class EventSocket extends WebSocket {
      * @param eventName - the name of the event
      * @param listener - the listener function to evoke
      */
-    on(eventName:string, listener:(data:any) => any):void {
+    on(eventName:string, listener:(game:Ref<Game>, data:any) => any):void {
         this.listeners[eventName] = listener;
     }
 
@@ -51,6 +59,26 @@ export class EventSocket extends WebSocket {
         }
 
         const listener = this.listeners[actionType];
-        listener(data);
+        if(!this.game) return;
+        listener(this.game, data);
+    }
+
+    connect(url:string, protocols:string[] = []):void {
+        const socket = new WebSocket(url, protocols);
+        socket.onopen = this.onopen;
+        socket.onclose = (e: CloseEvent) => console.log(e);
+        socket.onmessage = (e: MessageEvent) => this.routeEvent(e);
+
+        this.socket = socket;
+    }
+
+    /**
+     * Attaches the event listeners to the game instance that Vue is watching
+     * to perform DOM updates
+     * 
+     * @param game - the game object that Vue is watching
+     */
+    attach(game: Ref<Game>) {
+        this.game = game;
     }
 }

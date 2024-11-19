@@ -55,7 +55,7 @@ async function leaveGame():Promise<void> {
 
   <main>
     <LandingPage v-if="gameId === ''" @newGame="enterNewGame" @joinGame="joinGame"/>
-    <GameBoard v-if="game && socket" :new-game="game" :socket="socket"/>
+    <GameBoard v-if="!!gameId.length && game && socket" :new-game="game" :socket="socket"/>
 
     <div v-if="gameId && (!game || !socket)">
       Loading...
