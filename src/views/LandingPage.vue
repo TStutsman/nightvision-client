@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Ref } from 'vue';
 import { ref } from 'vue';
+import { TitleBanner } from '@/components';
 
 const emit = defineEmits(['joinGame']);
 
@@ -15,6 +16,8 @@ const joinGame = () => emit('joinGame', inputValue.value);
 
 <template>
     <div class="landing">
+        <TitleBanner gameId=''/>
+
         <div id="button-section">
             <button class="btn-large" @click="newGame">New Game</button>
             <button class="btn-large" @click="showGameInput">Join Game</button>

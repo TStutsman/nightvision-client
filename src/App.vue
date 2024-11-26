@@ -2,7 +2,7 @@
 import type { Game } from '@/types';
 import type { Ref } from 'vue';
 import { ref } from 'vue';
-import GameHeading from './components/GameHeading.vue';
+import TitleBanner from './components/TitleBanner.vue';
 import { EventSocket, initEventSocket } from './socket';
 import GameBoard from './views/GameBoard.vue';
 import LandingPage from './views/LandingPage.vue';
@@ -38,20 +38,12 @@ async function leaveGame():Promise<void> {
 </script>
 
 <template>
-  <header>
-    <div class="wrapper">
-      <GameHeading :gameId="gameId" @leaveGame="leaveGame"/>
-    </div>
-  </header>
+  <LandingPage v-if="gameId === ''" @joinGame="joinGame"/>
+  <GameBoard v-if="gameId && game && socket" :new-game="game" :socket="socket" :gameId="gameId" @leave-game="leaveGame"/>
 
-  <main>
-    <LandingPage v-if="gameId === ''" @joinGame="joinGame"/>
-    <GameBoard v-if="gameId && game && socket" :new-game="game" :socket="socket"/>
-
-    <div v-if="gameId && (!game || !socket)">
-      Loading...
-    </div>
-  </main>
+  <div v-if="gameId && (!game || !socket)">
+    Loading...
+  </div>
 </template>
 
 <style scoped>

@@ -10,7 +10,7 @@ const { copy } = useClipboard();
 </script>
 
 <template>
-  <div class="header">
+  <header>
     <div id="game-code" v-if="gameId !== ''">
       <h2>Game Code: {{ gameId }}</h2>
       <svg @click="copy(gameId)" id="copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor">
@@ -23,7 +23,7 @@ const { copy } = useClipboard();
     <div id="exit-btn" v-if="gameId !== ''">
       <button class="btn-small" @click="emit('leaveGame')">Exit Game</button>
     </div>
-  </div>
+  </header>
 </template>
 
 <style scoped>
@@ -31,10 +31,9 @@ h1 {
   font-weight: 500;
   font-size: 2.6rem;
   position: relative;
-  top: -10px;
 }
 
-.header {
+header {
   display: flex;
   justify-content: center;
   width: 100%;

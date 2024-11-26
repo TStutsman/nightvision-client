@@ -11,7 +11,7 @@ export interface Player {
 }
 
 export interface Game extends Object {
-  id: number;
+  id: string;
 
   activePlayer: number;
   players: { [id:number]: Player };

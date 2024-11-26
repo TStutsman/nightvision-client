@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { watch } from 'vue';
 import './../styles/base.css';
+
 const props = defineProps<{
-  revealed: boolean
-  illuminated: boolean | undefined
-}>()
+  type:string, revealed:boolean, illuminated:boolean | undefined
+}>();
 const emit = defineEmits(['deilluminate', 'tileClick']);
 
 watch(() => props.illuminated == true, () => {
@@ -12,7 +12,6 @@ watch(() => props.illuminated == true, () => {
         emit('deilluminate')
     }, 1000)
 });
-
 </script>
 
 <template>
@@ -22,12 +21,14 @@ watch(() => props.illuminated == true, () => {
                 <div class="tile-back" :class="{bright:illuminated}"></div>
                 <div class="tile-front">
                     <i :class="{hidden:!revealed, unhidden:revealed}">
-                        <slot name="icon"></slot>
+                        <img 
+                        v-bind:src="type ? 'https://nmls-pictures-bucket.s3.us-east-2.amazonaws.com/rainier_' + type.toLowerCase() + '.jpg' : ''" 
+                        v-bind:alt="type"
+                        class="tile-img"
+                        />
                     </i>
                     <div class="tile-name" :class="{hidden:!revealed, unhidden:revealed}">
-                        <h3>
-                            <slot name="description"></slot>
-                        </h3>
+                        <h3>{{ type }}</h3>
                     </div>
                 </div>
             </div>
@@ -77,6 +78,17 @@ watch(() => props.illuminated == true, () => {
 }
 .tile-front:has(i.unhidden){
     background: linear-gradient(var(--nv-c-grey), #FFF);
+}
+.tile-img {
+  position: absolute;
+  top:0;
+  z-index: -1;
+
+  height: 150px;
+  width: 105px;
+
+  opacity: 0.8;
+  border-radius: var(--tile-b-rad);
 }
 .bright {
     background-color: var(--nv-c-lightgrey);

@@ -1,7 +1,7 @@
 import Ability from "./Ability.vue";
-import GameHeading from "./GameHeading.vue";
+import TitleBanner from "./TitleBanner.vue";
 import Inventory from "./Inventory.vue";
 import Tile from "./Tile.vue";
 import UserScore from "./UserScore.vue";
 
-export { Ability, GameHeading, Inventory, Tile, UserScore };
+export { Ability, TitleBanner, Inventory, Tile, UserScore };
