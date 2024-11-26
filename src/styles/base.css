@@ -6,8 +6,13 @@
   --nv-c-lightgrey: #ada399;
   --nv-c-green: #60bf22;
 
-  --player-1: #268fc8;
-  --player-2: #ef3759;
+  --player-1-light: #519ed5;
+  --player-1: #1a66a9;
+  --player-1-dark: #18416d;
+  --player-2-light: #d1435d;
+  --player-2: #a41630;
+  --player-2-dark: #531122;
+  --player-2-extra-dark: #290911;
 
   --nv-c-divider-dark-1: rgba(84, 84, 84, 0.65);
   --nv-c-divider-dark-2: rgba(84, 84, 84, 0.48);
@@ -35,18 +40,6 @@
   box-sizing: border-box;
   margin: 0;
   font-weight: normal;
-}
-
-/* Tile size properties */
-:root {
-  --tile-height: 150px;
-  --tile-width: 105px;
-  --tile-b-rad: 10px;
-  --tile-thickness: calc(var(--tile-width)/10);
-  --tile-hover-padding: 10px;
-  --tile-hover-border-w: 4px;
-
-  --board-width: calc((var(--tile-width) + (var(--tile-hover-padding)*2))*7 + 30px);
 }
 
 body {

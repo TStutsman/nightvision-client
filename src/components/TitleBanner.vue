@@ -18,7 +18,7 @@ const { copy } = useClipboard();
       </svg>
     </div>
 
-    <h1 class="green">NIGHT VISION</h1>
+    <h1 id="title">NIGHT VISION</h1>
 
     <div id="exit-btn" v-if="gameId !== ''">
       <button class="btn-small" @click="emit('leaveGame')">Exit Game</button>
@@ -36,7 +36,14 @@ h1 {
 header {
   display: flex;
   justify-content: center;
+
   width: 100%;
+}
+
+#title {
+  font-size: 3em;
+  font-weight: 600;
+  color: var(--nv-c-lightgrey);
 }
 
 #game-code {
@@ -45,6 +52,7 @@ header {
   left: 1em;
 
   display: flex;
+  align-items: center;
 }
 
 #copy-icon {

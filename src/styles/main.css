@@ -3,7 +3,7 @@
 #app {
   margin: 0 auto;
   padding: 0;
-  overflow: hidden;
+  overflow-y: hidden;
 
   font-weight: normal;
 }

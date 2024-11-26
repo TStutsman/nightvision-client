@@ -3,7 +3,7 @@ import { watch } from 'vue';
 import './../styles/base.css';
 
 const props = defineProps<{
-  type:string, revealed:boolean, illuminated:boolean | undefined
+  type:string | undefined, revealed:boolean, illuminated:boolean | undefined
 }>();
 const emit = defineEmits(['deilluminate', 'tileClick']);
 
@@ -37,6 +37,16 @@ watch(() => props.illuminated == true, () => {
 </template>
 
 <style scoped>
+.tile-container {
+  --tile-height: 150px;
+  --tile-width: 105px;
+  --tile-b-rad: 10px;
+  --tile-thickness: calc(var(--tile-width)/10);
+  --tile-hover-padding: 10px;
+  --tile-hover-border-w: 4px;
+  /* --board-width: calc((var(--tile-width) + (var(--tile-hover-padding)*2))*7 + 30px); */
+}
+
 .tile-container {
     max-width: 125px;
     padding: var(--tile-hover-padding);

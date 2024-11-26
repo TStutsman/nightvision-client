@@ -1,7 +1,6 @@
 import Ability from "./Ability.vue";
 import TitleBanner from "./TitleBanner.vue";
-import Inventory from "./Inventory.vue";
 import Tile from "./Tile.vue";
-import UserScore from "./UserScore.vue";
+import Player from "./Player.vue";
 
-export { Ability, TitleBanner, Inventory, Tile, UserScore };
+export { Ability, TitleBanner, Tile, Player };
