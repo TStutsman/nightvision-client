@@ -59,3 +59,46 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* ===================== Buttons ===================== */
+
+button {
+  display: flex;
+  place-content: center;
+  place-items: center;
+  
+  color: var(--nv-c-lightgrey);
+
+  background-color: var(--nv-c-grey);
+  border-radius: 5px;
+  border: none;
+}
+
+@media (hover: hover) {
+  button:hover {
+      background-color: var(--nv-c-lightgrey);
+      color: var(--nv-c-grey);
+      cursor: pointer;
+  }
+}
+
+button:active {
+  background-color: var(--nv-v-darkgrey);
+  color: var(--nv-c-lightgrey);
+}
+
+.btn-large {
+  width: 250px;
+  height: 70px;
+  padding: 10px;
+
+  font-size: 2em;
+}
+
+.btn-small {
+  width: 120px;
+  height: 40px;
+  padding: 3px;
+
+  font-size: 1em;
+}

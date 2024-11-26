@@ -21,7 +21,7 @@ const { copy } = useClipboard();
     <h1 class="green">NIGHT VISION</h1>
 
     <div id="exit-btn" v-if="gameId !== ''">
-      <button @click="emit('leaveGame')">Exit Game</button>
+      <button class="btn-small" @click="emit('leaveGame')">Exit Game</button>
     </div>
   </div>
 </template>
