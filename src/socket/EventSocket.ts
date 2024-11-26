@@ -29,7 +29,7 @@ export class EventSocket {
 
         if (this.socket.readyState !== this.socket.OPEN) return;
 
-        const res = JSON.stringify({ event: eventName, data });
+        const res = JSON.stringify({ name: eventName, data });
         this.socket.send(res);
     }
 

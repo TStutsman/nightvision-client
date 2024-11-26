@@ -66,7 +66,7 @@ socket.on('endGame', (game, { message }) => {
 });
 
 socket.on('gameReset', (game, { data }) => {
-    game = data;
+    game.value = data;
 })
 
 socket.on('playerError', (game, { message }) => {
