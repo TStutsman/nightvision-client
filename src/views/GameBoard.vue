@@ -18,7 +18,7 @@ const deilluminate = (id: number) => game.value.deck[id].illuminated = false;
 
 <template>
   <TitleBanner :game-id="gameId" @leave-game="emit('leaveGame')" />
-  <EndGameView v-if="game?.gameOver" @play-again="socket.emit('playAgain')" :endGameState="game?.endGameStatus"/>
+  <EndGameView v-if="game?.endGameStatus" @play-again="socket.emit('playAgain')" :endGameState="game?.endGameStatus"/>
 
   <div id="game">
     <div id="board" :class="'player' + game.activePlayer.toString()">

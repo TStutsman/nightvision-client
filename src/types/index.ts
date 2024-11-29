@@ -10,14 +10,11 @@ export interface Player {
   points: number
 }
 
-export interface Game extends Object {
-  id: string;
-
+export interface Game {
   activePlayer: number;
   players: { [id:number]: Player };
   message: string;
 
-  gameOver: boolean;
   endGameStatus: string;
 
   deck: TileData[];
