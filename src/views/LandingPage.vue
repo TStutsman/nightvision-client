@@ -11,7 +11,19 @@ const inputValue:Ref<string> = ref('');
 const showGameInput = () => showIdInput.value = true;
 
 const newGame = () => emit('joinGame');
-const joinGame = () => emit('joinGame', inputValue.value);
+const joinGame = () => {
+    if(inputValue.value.match(/[^A-Za-z]/g)) {
+        //show an error
+        console.log('Room code must be alphabetical characters')
+        return;
+    }
+    if(inputValue.value.length !== 6) {
+        //show an error
+        console.log('Room code must be 6 characters in length')
+        return;
+    }
+    emit('joinGame', inputValue.value.toUpperCase());
+}
 </script>
 
 <template>
