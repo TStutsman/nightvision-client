@@ -134,7 +134,7 @@ h3 {
     animation: unflip .75s 1 forwards;
 }
 
-@media screen and (min-width: 320px) and (max-width: 967px) {
+@media screen and (max-width: 1280px) {
     .tile-container {
         --tile-height: 75px;
         --tile-width: 52.5px;

@@ -77,4 +77,13 @@ const playerColor = player.id == 1 ? 'blue' : 'red';
 .under-board {
     width: 62%;
 }
+
+@media screen and (min-width: 320px) and (max-width: 967px) {
+    .player h1 {
+        font-size: 1.25em;
+    }
+    .player h2 {
+        font-size: 1em;
+    }
+}
 </style>

@@ -139,9 +139,9 @@ const deilluminate = (id: number) => game.value.deck[id].illuminated = false;
   display: flex;
 }
 
-@media screen and (min-width: 320px) and (max-width: 967px) {
+@media screen and (max-width: 1280px) {
   #board {
-    width: 50%;
+    width: 40%;
     min-width: 460px;
   }
 
