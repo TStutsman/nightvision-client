@@ -138,4 +138,16 @@ const deilluminate = (id: number) => game.value.deck[id].illuminated = false;
   
   display: flex;
 }
+
+@media screen and (min-width: 320px) and (max-width: 967px) {
+  #board {
+    width: 50%;
+    min-width: 460px;
+  }
+
+  #abilities {
+    margin-top: 0;
+    padding: 0 7px 2px;
+  }
+}
 </style>

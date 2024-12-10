@@ -2,7 +2,6 @@
 import type { Game } from '@/types';
 import type { Ref } from 'vue';
 import { ref } from 'vue';
-import TitleBanner from './components/TitleBanner.vue';
 import { EventSocket, initEventSocket } from './socket';
 import GameBoard from './views/GameBoard.vue';
 import LandingPage from './views/LandingPage.vue';

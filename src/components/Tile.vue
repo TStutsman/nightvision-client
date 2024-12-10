@@ -20,14 +20,14 @@ watch(() => props.illuminated == true, () => {
             <div class="tile-inner" :class="{flipped:revealed, unflipped:!revealed}">
                 <div class="tile-back" :class="{bright:illuminated}"></div>
                 <div class="tile-front">
-                    <i :class="{hidden:!revealed, unhidden:revealed}">
+                    <i :class="{unhidden:revealed}">
                         <img 
                         v-bind:src="type ? 'https://nmls-pictures-bucket.s3.us-east-2.amazonaws.com/rainier_' + type.toLowerCase() + '.jpg' : ''" 
                         v-bind:alt="type"
                         class="tile-img"
                         />
                     </i>
-                    <div class="tile-name" :class="{hidden:!revealed, unhidden:revealed}">
+                    <div class="tile-name">
                         <h3>{{ type }}</h3>
                     </div>
                 </div>
@@ -44,7 +44,6 @@ watch(() => props.illuminated == true, () => {
   --tile-thickness: calc(var(--tile-width)/10);
   --tile-hover-padding: 10px;
   --tile-hover-border-w: 4px;
-  /* --board-width: calc((var(--tile-width) + (var(--tile-hover-padding)*2))*7 + 30px); */
 }
 
 .tile-container {
@@ -94,8 +93,8 @@ watch(() => props.illuminated == true, () => {
   top:0;
   z-index: -1;
 
-  height: 150px;
-  width: 105px;
+  height: var(--tile-height);
+  width: var(--tile-width);
 
   opacity: 0.8;
   border-radius: var(--tile-b-rad);
@@ -114,7 +113,7 @@ i {
 .tile-name {
   height: 100%;
   display: flex;
-  place-items: end;
+  align-items: end;
   place-content: center;
 }
 
@@ -133,6 +132,19 @@ h3 {
 
 .unflipped {
     animation: unflip .75s 1 forwards;
+}
+
+@media screen and (min-width: 320px) and (max-width: 967px) {
+    .tile-container {
+        --tile-height: 75px;
+        --tile-width: 52.5px;
+        --tile-hover-padding: 6px;
+        --tile-b-rad: 5px;
+    }
+    h3 {
+        font-size: .7rem;
+        margin-bottom: .2rem;
+    }
 }
 
 @keyframes flip {

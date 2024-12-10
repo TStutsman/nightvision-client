@@ -22,10 +22,17 @@ socket.on('noMatch', (game, { data }) => {
     setTimeout(() => {
         tile1.revealed = false;
         tile2.revealed = false;
-        tile1.type = '';
-        tile2.type = '';
         game.value.activePlayer = nextPlayerId;
     }, 1500);
+
+    /** 
+     * unset types after unflip animation (.75s)
+     * prevents image unloading before animation plays
+     */
+    setTimeout(() => {
+        tile1.type = '';
+        tile2.type = '';
+    }, 2250);
 });
 
 socket.on('flashlight', () => {
@@ -61,7 +68,6 @@ socket.on('reshuffled', (game, { data }) => {
 });
 
 socket.on('endGame', (game, { message }) => {
-    game.value.gameOver = true;
     game.value.endGameStatus = message;
 });
 
@@ -78,7 +84,7 @@ socket.on('playerError', (game, { message }) => {
 });
 
 
-const origin = import.meta.env.MODE === 'development' ? 'ws://localhost:8080' : location.origin.replace('\^http', 'ws');
+const origin = import.meta.env.MODE === 'development' ? 'ws://localhost:8080' : location.origin.replace(/^http/, 'ws');
 /**
  * Creates the WebSocket instance on the unique url of the new game
  * 

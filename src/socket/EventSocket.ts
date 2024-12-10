@@ -66,7 +66,7 @@ export class EventSocket {
     connect(url:string, protocols:string[] = []):void {
         const socket = new WebSocket(url, protocols);
         socket.onopen = this.onopen;
-        socket.onclose = (e: CloseEvent) => console.log(e);
+        socket.onclose = (e: CloseEvent) => console.log('closing socket');
         socket.onmessage = (e: MessageEvent) => this.routeEvent(e);
 
         this.socket = socket;

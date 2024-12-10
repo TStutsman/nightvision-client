@@ -31,12 +31,12 @@ const joinGame = () => {
         <TitleBanner gameId=''/>
 
         <div id="button-section">
-            <button class="btn-large" @click="newGame">New Game</button>
-            <button class="btn-large" @click="showGameInput">Join Game</button>
+            <button class="btn-landing" @click="newGame">New Game</button>
+            <button class="btn-landing" @click="showGameInput">Join Game</button>
         </div>
         <div id="input-section" v-if="showIdInput">
             <input type="text" v-model="inputValue">
-            <button class="btn-large" @click="joinGame">Go</button>
+            <button class="btn-landing" @click="joinGame">Go</button>
         </div>
     </div>
 </template>
@@ -76,5 +76,11 @@ input {
     background-color: var(--nv-c-lightgrey);
     border-radius: 5px;
     border: none;
+}
+
+@media screen and (min-width: 320px) and (max-width: 967px) {
+    .landing {
+        gap: 50px;
+    }
 }
 </style>

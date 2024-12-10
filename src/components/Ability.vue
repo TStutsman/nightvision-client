@@ -6,7 +6,13 @@ const showDesc = ref(false);
 </script>
 
 <template>
-    <button class="btn-large ability" @mouseover="showDesc = true" @mouseleave="showDesc = false" @click="$emit(name)">
+    <button class="btn-large ability"
+     @mouseover="showDesc = true"
+     @touchstart="showDesc = true"
+     @mouseleave="showDesc = false"
+     @touchend="showDesc = false"
+     @click="$emit(name)"
+    >
         <h3 v-if="!showDesc">{{ text }}</h3>
         <h3 v-if="showDesc">{{ description }}</h3>
     </button>

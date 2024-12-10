@@ -27,12 +27,6 @@ const { copy } = useClipboard();
 </template>
 
 <style scoped>
-h1 {
-  font-weight: 500;
-  font-size: 2.6rem;
-  position: relative;
-}
-
 header {
   position: relative;
   display: flex;
@@ -78,5 +72,20 @@ header {
 
 .green {
   color: var(--nv-c-green);
+}
+
+@media screen and (min-width: 320px) and (max-width: 967px) {
+  #title {
+    font-size: 1.5rem;
+  }
+
+  #game-code {
+    top: .5em;
+    font-size: .7rem;
+  }
+
+  #exit-btn {
+    top: .5em;
+  }
 }
 </style>
