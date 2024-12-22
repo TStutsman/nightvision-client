@@ -88,7 +88,7 @@ watch(() => props.illuminated == true, () => {
 }
 .tile-back > h2 {
     font-size: 2.6rem;
-    color: rgb(69, 69, 69);
+    color: rgb(72, 72, 72);
 }
 .tile-front {
     transform: rotateY(180deg);
