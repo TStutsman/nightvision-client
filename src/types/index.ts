@@ -1,5 +1,6 @@
 export interface TileData {
   type: string,
+  url: string,
   revealed: boolean,
   illuminated: boolean | undefined
 }
@@ -19,4 +20,6 @@ export interface Game {
 
   deck: TileData[];
   flippedTiles: TileData[];
+
+  images: string[];
 }

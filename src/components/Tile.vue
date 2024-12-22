@@ -3,7 +3,10 @@ import { watch } from 'vue';
 import './../styles/base.css';
 
 const props = defineProps<{
-  type:string | undefined, revealed:boolean, illuminated:boolean | undefined
+  type:string | undefined,
+  url:string | undefined,
+  revealed:boolean, 
+  illuminated:boolean | undefined
 }>();
 const emit = defineEmits(['deilluminate', 'tileClick']);
 
@@ -18,14 +21,12 @@ watch(() => props.illuminated == true, () => {
     <div @click="$emit('tileClick')" class="tile-container" :class="{selectable:!revealed}">
         <div class="tile">
             <div class="tile-inner" :class="{flipped:revealed, unflipped:!revealed}">
-                <div class="tile-back" :class="{bright:illuminated}"></div>
+                <div class="tile-back" :class="{bright:illuminated}">
+                    <h2>N V</h2>
+                </div>
                 <div class="tile-front">
                     <i :class="{unhidden:revealed}">
-                        <img 
-                        v-bind:src="type ? 'https://nmls-pictures-bucket.s3.us-east-2.amazonaws.com/rainier_' + type.toLowerCase() + '.jpg' : ''" 
-                        v-bind:alt="type"
-                        class="tile-img"
-                        />
+                        <img class="tile-img" v-bind:src="url || ''" v-bind:alt="type"/>
                     </i>
                     <div class="tile-name">
                         <h3>{{ type }}</h3>
@@ -78,8 +79,16 @@ watch(() => props.illuminated == true, () => {
     border-radius: var(--tile-b-rad);
 }
 .tile-back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     background-color: var(--nv-c-grey);
     transition: background-color .5s;
+}
+.tile-back > h2 {
+    font-size: 2.6rem;
+    color: rgb(69, 69, 69);
 }
 .tile-front {
     transform: rotateY(180deg);
@@ -118,7 +127,7 @@ i {
 }
 
 h3 {
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   font-weight: 800;
   margin-bottom: 0.4rem;
   color: var(--nv-c-black);
@@ -173,9 +182,11 @@ h3 {
 
 /* Hover effect here is only applied if the device can hover (not mobile device) */
 @media (hover: hover) {
-  .selectable:hover {
-    padding: calc(var(--tile-hover-padding) - var(--tile-hover-border-w));
-    border: var(--tile-hover-border-w) solid var(--nv-c-green);
+  .selectable:hover > .tile {
+    /* padding: calc(var(--tile-hover-padding) - var(--tile-hover-border-w));
+    border: var(--tile-hover-border-w) solid var(--nv-c-green); */
+    -webkit-box-shadow: 0 0 10px 4px var(--nv-c-green);
+    box-shadow: 0 0 10px 4px var(--nv-c-green);
   }
 }
 </style>

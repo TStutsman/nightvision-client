@@ -28,6 +28,7 @@ const playerColor = player.id == 1 ? 'blue' : 'red';
 <style scoped>
 .player-wrapper {
     display: flex;
+    align-items: center;
 
     width: 50%;
     padding: 100px 0;

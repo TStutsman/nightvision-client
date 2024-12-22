@@ -13,6 +13,12 @@ const emit = defineEmits(['leaveGame']);
 const game:Ref<Game> = ref(newGame);
 socket.attach(game);
 
+/** This bit loads all the images for the game, so the browser can cache them */
+newGame.images.forEach(src => {
+  const image = new Image();
+  image.src = src;
+});
+
 const deilluminate = (id: number) => game.value.deck[id].illuminated = false;
 </script>
 
@@ -29,6 +35,7 @@ const deilluminate = (id: number) => game.value.deck[id].illuminated = false;
           :revealed="tile.revealed"
           :illuminated="tile.illuminated"
           :type="tile.type"
+          :url="tile.url"
           @tile-click="socket.emit('tileClick', {tileId: index})"
           @deilluminate="deilluminate(index)"
         />

@@ -3,10 +3,11 @@ import { EventSocket } from "./EventSocket";
 const socket = new EventSocket();
 
 socket.on('tileClick', (game, { data }) => {
-    const { id: tileId, type } = data;
+    const { id: tileId, type, url } = data;
     const tile = game.value.deck[tileId];
     tile.revealed = true;
     tile.type = type;
+    tile.url = url
 });
 
 socket.on('match', (game, { data }) => {
@@ -31,7 +32,9 @@ socket.on('noMatch', (game, { data }) => {
      */
     setTimeout(() => {
         tile1.type = '';
+        tile1.url = '';
         tile2.type = '';
+        tile2.url = '';
     }, 2250);
 });
 

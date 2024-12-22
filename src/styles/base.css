@@ -40,6 +40,7 @@
   box-sizing: border-box;
   margin: 0;
   font-weight: normal;
+  font-family: 'Caveat';
 }
 
 html {
@@ -136,4 +137,9 @@ button:active {
 
     font-size: .7rem;
   }
+}
+
+@font-face {
+  font-family: "Caveat";
+  src: url('../fonts/Caveat-VariableFont_wght.ttf');
 }
