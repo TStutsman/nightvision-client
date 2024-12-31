@@ -22,7 +22,6 @@ watch(() => props.illuminated == true, () => {
         <div class="tile">
             <div class="tile-inner" :class="{flipped:revealed, unflipped:!revealed}">
                 <div class="tile-back" :class="{bright:illuminated}">
-                    <h2>N V</h2>
                 </div>
                 <div class="tile-front">
                     <i :class="{unhidden:revealed}">
@@ -83,12 +82,10 @@ watch(() => props.illuminated == true, () => {
     align-items: center;
     justify-content: center;
 
+    cursor: pointer;
+
     background-color: var(--nv-c-grey);
     transition: background-color .5s;
-}
-.tile-back > h2 {
-    font-size: 2.6rem;
-    color: rgb(72, 72, 72);
 }
 .tile-front {
     transform: rotateY(180deg);
