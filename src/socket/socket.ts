@@ -76,6 +76,14 @@ socket.on('endGame', (game, { message }) => {
 
 socket.on('gameReset', (game, { data }) => {
     game.value = data;
+});
+
+socket.on('playerJoin', (game, { message }) => {
+    game.value.message = message;
+
+    setTimeout(() => {
+        game.value.message = '';
+    }, (2000));
 })
 
 socket.on('playerError', (game, { message }) => {
