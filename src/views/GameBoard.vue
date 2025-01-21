@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Ability, Tile, TitleBanner, Player } from '@/components';
+import { Ability, Alert, Tile, TitleBanner, Player } from '@/components';
 import type { Game } from '@/types';
 import type { Ref } from 'vue';
 import { ref } from 'vue';
@@ -25,6 +25,7 @@ const deilluminate = (id: number) => game.value.deck[id].illuminated = false;
 <template>
   <TitleBanner :game-id="gameId" @leave-game="emit('leaveGame')" />
   <EndGameView v-if="game?.endGameStatus" @play-again="socket.emit('playAgain')" :endGameState="game?.endGameStatus"/>
+  <Alert v-if="game.message" :message="game.message"/>
 
   <div id="game">
     <div id="board" :class="'player' + game.activePlayer.toString()">
@@ -40,8 +41,6 @@ const deilluminate = (id: number) => game.value.deck[id].illuminated = false;
           @deilluminate="deilluminate(index)"
         />
       </div>
-
-      <div class="errorMessage">{{game.message}}</div>
 
       <div id="abilities">
         <Ability 
@@ -111,17 +110,6 @@ const deilluminate = (id: number) => game.value.deck[id].illuminated = false;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
-}
-
-.errorMessage{
-  display: flex;
-  place-content: center;
-
-  width: 100%;
-  height: 14px;
-
-  font-size: 14px;
-  color: var(--nv-c-green);
 }
 
 #abilities {
