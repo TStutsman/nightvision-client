@@ -33,7 +33,7 @@ const { message } = defineProps<{message:string}>();
     padding: 40px 120px;
     user-select: none;
     width: 100%;
-    
+
     filter: drop-shadow(0 0 10px rgb(33, 35, 32));
 
     animation: float 1.5s 1 forwards;
@@ -41,7 +41,7 @@ const { message } = defineProps<{message:string}>();
 }
 
 svg {
-    font-size: 40px;
+    font-size: 30px;
     width: 60%;
 }
 
