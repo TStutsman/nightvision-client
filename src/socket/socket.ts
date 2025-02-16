@@ -52,12 +52,21 @@ socket.on('flashlightUsed', (game, { message, data }) => {
             deck[i + rowFirstIndex].illuminated = true;
         }, 75*i);
     }
+
+    setTimeout(() => {
+        game.value.message = ""
+    }, 2000)
 });
 
-socket.on('bearSpray', (game, { data }) => {
+socket.on('bearSpray', (game, { data, message }) => {
+    game.value.message = message;
     const { playerId, nextPlayerId } = data;
     game.value.players[playerId].hasSpray = true;
     game.value.activePlayer = nextPlayerId;
+
+    setTimeout(() => {
+        game.value.message = "";
+    }, 2000);
 });
 
 socket.on('bearSprayUsed', (game, { data }) => {
