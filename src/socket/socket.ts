@@ -64,6 +64,7 @@ socket.on('bearSpray', (game, { data, message }) => {
     game.value.players[playerId].hasSpray = true;
     game.value.activePlayer = nextPlayerId;
 
+    // Unset bearspray purchase message after timeout (2s)
     setTimeout(() => {
         game.value.message = "";
     }, 2000);
