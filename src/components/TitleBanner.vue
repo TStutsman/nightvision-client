@@ -27,14 +27,17 @@ header {
 }
 
 #title {
-  font-size: 3em;
-  font-weight: 600;
+  font-size: 1.5em;
+  font-weight: 200;
+
+  padding: 10px;
+
   color: var(--white);
 }
 
 #exit-btn {
   position: absolute;
-  top: 1em;
+  top: .5em;
   right: 1em;
 
   height: 30px;
@@ -49,18 +52,13 @@ header {
   fill: var(--white);;
 }
 
-@media screen and (min-width: 320px) and (max-width: 967px) {
+@media screen and (min-width: 967px) {
   #title {
-    font-size: 1.5rem;
-  }
-
-  #game-code {
-    top: .5em;
-    font-size: .7rem;
+    font-size: 3rem;
   }
 
   #exit-btn {
-    top: .5em;
+    top: 1em;
   }
 }
 </style>

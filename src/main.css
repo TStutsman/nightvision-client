@@ -17,7 +17,7 @@
   box-sizing: border-box;
   margin: 0;
   font-weight: normal;
-  font-family: 'Caveat';
+  font-family: 'Lato';
 }
 
 html {
@@ -80,14 +80,6 @@ button:active {
   color: var(--white);
 }
 
-.btn-landing {
-  width: 250px;
-  height: 70px;
-  padding: 10px;
-
-  font-size: 2em;
-}
-
 .btn-large {
   width: 125px;
   height: 35px;
@@ -124,5 +116,17 @@ button:active {
 
 @font-face {
   font-family: "Caveat";
-  src: url('../fonts/Caveat-VariableFont_wght.ttf');
+  src: url('./fonts/Caveat-VariableFont_wght.ttf');
+}
+
+@font-face {
+  font-family: "Lato";
+  font-weight: 400;
+  src: url('./fonts/Lato/Lato-Regular.ttf');
+}
+
+@font-face {
+  font-family: "Lato";
+  font-weight: 700;
+  src: url('./fonts/Lato/Lato-Bold.ttf');
 }
