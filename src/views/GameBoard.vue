@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useClipboard } from '@vueuse/core';
 import { Ability, Tile, TitleBanner, Player } from '@/components';
 import type { Game } from '@/types';
 import type { Ref } from 'vue';
@@ -20,6 +21,8 @@ newGame.images.forEach(src => {
 });
 
 const deilluminate = (id: number) => game.value.deck[id].illuminated = false;
+
+const { copy } = useClipboard();
 </script>
 
 <template>
@@ -44,9 +47,20 @@ const deilluminate = (id: number) => game.value.deck[id].illuminated = false;
     </div>
 
     <div id="left-column">
-      <Player :player="game?.players[1]" :is-active="game?.activePlayer === 1"/>
-      <Player :player="game?.players[2]" :is-active="game?.activePlayer === 2"/>
-      <h3>QR CODE HERE</h3>
+      <div id="players">
+        <Player :player="game?.players[1]" :is-active="game?.activePlayer === 1"/>
+        <Player :player="game?.players[2]" :is-active="game?.activePlayer === 2"/>
+      </div>
+      
+      <div id="game-code" v-if="gameId !== ''">
+        <h2>Game Code</h2>
+        <div>
+          {{ gameId }}
+          <svg @click="copy(gameId)" id="copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor">
+            <path d="M208 0L332.1 0c12.7 0 24.9 5.1 33.9 14.1l67.9 67.9c9 9 14.1 21.2 14.1 33.9L448 336c0 26.5-21.5 48-48 48l-192 0c-26.5 0-48-21.5-48-48l0-288c0-26.5 21.5-48 48-48zM48 128l80 0 0 64-64 0 0 256 192 0 0-32 64 0 0 48c0 26.5-21.5 48-48 48L48 512c-26.5 0-48-21.5-48-48L0 176c0-26.5 21.5-48 48-48z"/>
+          </svg>
+        </div>
+      </div>
     </div>
 
     <div id="abilities">
@@ -75,10 +89,53 @@ const deilluminate = (id: number) => game.value.deck[id].illuminated = false;
 <style scoped>
 #game {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 1fr 4fr 1fr;
   grid-template-rows: 1fr;
 
   width: 100%;
+}
+
+#left-column {
+  grid-column: 1;
+  grid-row: 1;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  padding: 20px 0;
+}
+
+#players {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+#game-code {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+}
+
+#game-code > h2 {
+  font-size: 1.5rem;
+}
+
+#copy-icon {
+  height: 20px;
+  margin-left: 10px;
+}
+
+#copy-icon:hover {
+  color: #FFF;
+}
+
+#copy-icon:active {
+  color: var(--color-text)
 }
 
 #board {
@@ -89,8 +146,6 @@ const deilluminate = (id: number) => game.value.deck[id].illuminated = false;
   align-items: center;
 
   padding: 5px;
-  width: 40%;
-  min-width: 460px;
 }
 
 #tiles{
@@ -98,7 +153,7 @@ const deilluminate = (id: number) => game.value.deck[id].illuminated = false;
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: repeat(3, 1fr);
 
-  background-color: rgba(45, 12, 5, .8);
+  background-color: rgba(45, 12, 5, .6);
 
   border-radius: 8px;
   border: 1px solid var(--grey);
@@ -125,16 +180,6 @@ const deilluminate = (id: number) => game.value.deck[id].illuminated = false;
 
   gap: 8px;
   width: 100%;
-}
-
-#left-column {
-  grid-column: 1;
-  grid-row: 1;
-  
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
 }
 
 @media screen and (min-width: 1280px) {

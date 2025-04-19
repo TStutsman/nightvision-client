@@ -54,8 +54,8 @@ watch(() => props.illuminated == true, () => {
 <style scoped>
 .tile-container {
     /* 32:23 ratio */
-    --tile-height: 80px;
-    --tile-width: 57.5px;
+    --tile-height: 96px;
+    --tile-width: 69px;
     --tile-b-rad: 5px;
     --tile-thickness: calc(var(--tile-width)/10);
     --tile-hover-padding: 6px;

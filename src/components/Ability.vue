@@ -21,8 +21,9 @@ const showDesc = ref(false);
 <style scoped>
 .ability {
     font-size: 1em;
-
     height: 80px;
+
+    background-color: hsl(from var(--green) calc(h + 10) s calc(l - 5));
 }
 
 button > h3 {

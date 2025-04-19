@@ -1,28 +1,16 @@
 <script setup lang="ts">
-import { useClipboard } from '@vueuse/core';
-
 const emit = defineEmits(['leaveGame']);
 const { gameId } = defineProps<{
   gameId: string
 }>();
-
-const { copy } = useClipboard();
 </script>
 
 <template>
   <header>
-    <div id="game-code" v-if="gameId !== ''">
-      <h2>Game Code: {{ gameId }}</h2>
-      <svg @click="copy(gameId)" id="copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor">
-        <path d="M208 0L332.1 0c12.7 0 24.9 5.1 33.9 14.1l67.9 67.9c9 9 14.1 21.2 14.1 33.9L448 336c0 26.5-21.5 48-48 48l-192 0c-26.5 0-48-21.5-48-48l0-288c0-26.5 21.5-48 48-48zM48 128l80 0 0 64-64 0 0 256 192 0 0-32 64 0 0 48c0 26.5-21.5 48-48 48L48 512c-26.5 0-48-21.5-48-48L0 176c0-26.5 21.5-48 48-48z"/>
-      </svg>
-    </div>
-
     <h1 id="title">Watch out for bears!</h1>
-
-    <div id="exit-btn" v-if="gameId !== ''">
-      <button class="btn-small" @click="emit('leaveGame')">Exit Game</button>
-    </div>
+    <button id="exit-btn" v-if="gameId !== ''" class="btn-small" @click="emit('leaveGame')">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>
+    </button>
   </header>
 </template>
 
@@ -42,36 +30,21 @@ header {
   color: var(--white);
 }
 
-#game-code {
-  position: absolute;
-  top: 1em;
-  left: 1em;
-
-  display: flex;
-  align-items: center;
-}
-
-#copy-icon {
-  height: 20px;
-  margin-left: 10px;
-}
-
-#copy-icon:hover {
-  color: #FFF;
-}
-
-#copy-icon:active {
-  color: var(--color-text)
-}
-
 #exit-btn {
   position: absolute;
   top: 1em;
   right: 1em;
+
+  height: 30px;
+  width: 30px;
+
+  background-color: rgb(160, 29, 29) ;
 }
 
-.green {
-  color: var(--green);
+#exit-btn svg {
+  height: 15px;
+  width: 15px;
+  fill: var(--white);;
 }
 
 @media screen and (min-width: 320px) and (max-width: 967px) {
