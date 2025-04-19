@@ -37,17 +37,17 @@ const playerColor = player.id == 1 ? 'blue' : 'red';
 }
 
 .player-wrapper.active.blue {
-    background: linear-gradient(90deg, var(--player-1-light), 2%, var(--player-1), 80%, var(--nv-c-darkgrey));
+    background: linear-gradient(90deg, var(--player-1-light), 2%, var(--player-1), 80%, var(--darkgrey));
 }
 .player-wrapper.inactive.blue {
-    background: linear-gradient(90deg, var(--player-1), 2%, var(--player-1-dark), 80%, var(--nv-c-darkgrey));
+    background: linear-gradient(90deg, var(--player-1), 2%, var(--player-1-dark), 80%, var(--darkgrey));
 }
 
 .player-wrapper.active.red {
-    background: linear-gradient(-90deg, var(--player-2-light), 2%, var(--player-2), 80%, var(--nv-c-darkgrey));
+    background: linear-gradient(-90deg, var(--player-2-light), 2%, var(--player-2), 80%, var(--darkgrey));
 }
 .player-wrapper.inactive.red {
-    background: linear-gradient(-90deg, var(--player-2), 2%, var(--player-2-dark), 80%, var(--nv-c-darkgrey));
+    background: linear-gradient(-90deg, var(--player-2), 2%, var(--player-2-dark), 80%, var(--darkgrey));
 }
 
 .player{

@@ -71,9 +71,9 @@ input {
     padding: 10px;
 
     font-size: 2em;
-    color: var(--nv-c-grey);
+    color: var(--grey);
 
-    background-color: var(--nv-c-lightgrey);
+    background-color: var(--white);
     border-radius: 5px;
     border: none;
 }

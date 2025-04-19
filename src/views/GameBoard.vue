@@ -92,7 +92,7 @@ const deilluminate = (id: number) => game.value.deck[id].illuminated = false;
   background-color: rgba(22, 24, 23, .8);
 
   border-radius: 8px;
-  border: 1px ridge var(--nv-c-darkgrey);
+  border: 1px ridge var(--darkgrey);
 }
 
 #board.player1{
@@ -121,7 +121,7 @@ const deilluminate = (id: number) => game.value.deck[id].illuminated = false;
   height: 14px;
 
   font-size: 14px;
-  color: var(--nv-c-green);
+  color: var(--green);
 }
 
 #abilities {

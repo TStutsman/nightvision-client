@@ -39,7 +39,7 @@ header {
 #title {
   font-size: 3em;
   font-weight: 600;
-  color: var(--nv-c-lightgrey);
+  color: var(--white);
 }
 
 #game-code {
@@ -71,7 +71,7 @@ header {
 }
 
 .green {
-  color: var(--nv-c-green);
+  color: var(--green);
 }
 
 @media screen and (min-width: 320px) and (max-width: 967px) {

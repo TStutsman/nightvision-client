@@ -89,10 +89,10 @@ watch(() => props.illuminated == true, () => {
 }
 .tile-front {
     transform: rotateY(180deg);
-    background-color: var(--nv-c-grey);
+    background-color: var(--grey);
 }
 .tile-front:has(i.unhidden){
-    background: linear-gradient(var(--nv-c-grey), #FFF);
+    background: linear-gradient(var(--grey), #FFF);
 }
 .tile-img {
   position: absolute;
@@ -106,7 +106,7 @@ watch(() => props.illuminated == true, () => {
   border-radius: var(--tile-b-rad);
 }
 .bright {
-    background-color: var(--nv-c-lightgrey);
+    background-color: var(--white);
 }
 i {
   display: flex;
@@ -127,7 +127,7 @@ h3 {
   font-size: 1.6rem;
   font-weight: 800;
   margin-bottom: 0.4rem;
-  color: var(--nv-c-black);
+  color: var(--black);
   filter: drop-shadow(0 0 2px #ddd);
   user-select: none;
 }
@@ -181,9 +181,9 @@ h3 {
 @media (hover: hover) {
   .selectable:hover > .tile {
     /* padding: calc(var(--tile-hover-padding) - var(--tile-hover-border-w));
-    border: var(--tile-hover-border-w) solid var(--nv-c-green); */
-    -webkit-box-shadow: 0 0 10px 4px var(--nv-c-green);
-    box-shadow: 0 0 10px 4px var(--nv-c-green);
+    border: var(--tile-hover-border-w) solid var(--green); */
+    -webkit-box-shadow: 0 0 10px 4px var(--orange);
+    box-shadow: 0 0 10px 4px var(--orange);
   }
 }
 </style>
