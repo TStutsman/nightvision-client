@@ -38,8 +38,8 @@ watch(() => props.illuminated == true, () => {
 
 <style scoped>
 .tile-container {
-  --tile-height: 150px;
-  --tile-width: 105px;
+  --tile-height: 160px;
+  --tile-width: 115px;
   --tile-b-rad: 10px;
   --tile-thickness: calc(var(--tile-width)/10);
   --tile-hover-padding: 10px;
@@ -84,7 +84,7 @@ watch(() => props.illuminated == true, () => {
 
     cursor: pointer;
 
-    background-color: var(--nv-c-grey);
+    background-image: url('../images/tile.svg');
     transition: background-color .5s;
 }
 .tile-front {
