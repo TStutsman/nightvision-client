@@ -152,6 +152,8 @@ const { copy } = useClipboard();
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: repeat(3, 1fr);
+  padding: 6px;
+  gap: 6px;
 
   background-color: rgba(45, 12, 5, .6);
 
@@ -186,6 +188,11 @@ const { copy } = useClipboard();
   #board {
     width: 62%;
     min-width: 875px;
+  }
+
+  #tiles {
+    gap: 10px;
+    padding: 10px;
   }
 }
 </style>

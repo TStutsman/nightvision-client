@@ -58,11 +58,9 @@ watch(() => props.illuminated == true, () => {
     --tile-width: 69px;
     --tile-b-rad: 5px;
     --tile-thickness: calc(var(--tile-width)/10);
-    --tile-hover-padding: 6px;
     --tile-hover-border-w: 4px;
 
     max-width: 125px;
-    padding: var(--tile-hover-padding);
     position: relative;
     border-radius: calc(var(--tile-b-rad)*2);
 }
@@ -193,7 +191,7 @@ watch(() => props.illuminated == true, () => {
         --tile-height: 160px;
         --tile-width: 115px;
         --tile-hover-padding: 10px;
-        --tile-b-rad: 4px;
+        --tile-b-rad: 12px;
     }
     h3 {
         font-size: 1.6rem;
