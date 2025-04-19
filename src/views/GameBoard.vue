@@ -88,8 +88,8 @@ const deilluminate = (id: number) => game.value.deck[id].illuminated = false;
   align-items: center;
 
   padding: 5px;
-  width: 62%;
-  min-width: 875px;
+  width: 40%;
+  min-width: 460px;
 }
 
 #tiles{
@@ -97,10 +97,10 @@ const deilluminate = (id: number) => game.value.deck[id].illuminated = false;
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: repeat(3, 1fr);
 
-  background-color: rgba(22, 24, 23, .8);
+  background-color: rgba(45, 12, 5, .8);
 
   border-radius: 8px;
-  border: 1px ridge var(--darkgrey);
+  border: 1px solid var(--grey);
 }
 
 .errorMessage{
@@ -127,26 +127,17 @@ const deilluminate = (id: number) => game.value.deck[id].illuminated = false;
 }
 
 #players {
-  position: absolute;
-  
-  bottom: 2px;
-  top: 2px;
-  left: 5px;
-  right: 5px;
-  z-index: -1;
+  grid-column: 1;
+  grid-row: 1;
   
   display: flex;
+  flex-direction: column;
 }
 
-@media screen and (max-width: 1280px) {
+@media screen and (min-width: 1280px) {
   #board {
-    width: 40%;
-    min-width: 460px;
-  }
-
-  #abilities {
-    margin-top: 0;
-    padding: 0 7px 2px;
+    width: 62%;
+    min-width: 875px;
   }
 }
 </style>

@@ -1,7 +1,7 @@
-/* color palette for nightvision */
+/* color palette */
 :root {
   --black: #030301;
-  --darkgrey: #161817;
+  --darkgrey: #121B17;
   --grey: #262724;
   --lightgrey: #7A7B78;
   --white: #D5D7D1;
@@ -9,32 +9,11 @@
   --orange: #D85F1C;
   --yellow: #FADB72;
 
-  --player-1-light: #519ed5;
-  --player-1: #1a66a9;
-  --player-1-dark: #18416d;
-  --player-2-light: #d1435d;
-  --player-2: #a41630;
-  --player-2-dark: #531122;
-  --player-2-extra-dark: #290911;
-
   --divider-dark-1: rgba(84, 84, 84, 0.65);
   --divider-dark-2: rgba(84, 84, 84, 0.48);
 
   --text-dark-1: var(--white);
   --text-dark-2: rgba(235, 235, 235, 0.64);
-}
-
-/* semantic color variables */
-:root {
-  --color-background: var(--darkgrey);
-
-  --color-border: var(--divider-dark-2);
-  --color-border-hover: var(--green);
-
-  --color-heading: var(--text-dark-1);
-  --color-text: var(--text-dark-1);
-
-  --section-gap: 160px;
 }
 
 *,
@@ -69,8 +48,8 @@ html {
 body {
   height: 100%;
   width: 100%;
-  color: var(--color-text);
-  background: var(--color-background);
+  color: var(--white);
+  background: var(--darkgrey);
   transition: color 0.5s, background-color 0.5s;
   line-height: 1.6;
   font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
@@ -104,7 +83,7 @@ button {
 }
 
 button:active {
-  background-color: var(--nv-v-darkgrey);
+  background-color: var(--darkgrey);
   color: var(--white);
 }
 
