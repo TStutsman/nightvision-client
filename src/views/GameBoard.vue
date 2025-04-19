@@ -5,7 +5,6 @@ import type { Game } from '@/types';
 import type { Ref } from 'vue';
 import { ref } from 'vue';
 import type { EventSocket } from '../socket';
-import './../styles/base.css';
 import EndGameView from './EndGameView.vue';
 
 const { newGame, socket } = defineProps<{newGame: Game, gameId:string, socket: EventSocket}>();

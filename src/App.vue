@@ -46,7 +46,14 @@ async function leaveGame():Promise<void> {
 </template>
 
 <style scoped>
-header {
-  line-height: 1;
+#app {
+  margin: 0 auto;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+
+  overflow-y: hidden;
+
+  font-weight: normal;
 }
 </style>

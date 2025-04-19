@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { watch } from 'vue';
-import './../styles/base.css';
 
 const props = defineProps<{
   type:string | undefined,

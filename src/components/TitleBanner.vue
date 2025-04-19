@@ -19,9 +19,11 @@ header {
   position: relative;
   display: flex;
   justify-content: center;
-
+  
   width: 100%;
   z-index: 2;
+  
+  line-height: 1;
 }
 
 #title {
