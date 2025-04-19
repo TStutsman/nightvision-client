@@ -8,7 +8,7 @@ const playerColor = player.id == 1 ? 'blue' : 'red';
 
 <template>
     
-    <div class="player-wrapper" :class="playerColor, isActive ? 'active' : 'inactive'">
+    <div class="player-wrapper">
         <div v-if="player.id == 2" class="under-board"></div>
 
         <div class="player">
@@ -34,20 +34,6 @@ const playerColor = player.id == 1 ? 'blue' : 'red';
     padding: 100px 0;
 
     border-radius: 8px;
-}
-
-.player-wrapper.active.blue {
-    background: linear-gradient(90deg, var(--player-1-light), 2%, var(--player-1), 80%, var(--darkgrey));
-}
-.player-wrapper.inactive.blue {
-    background: linear-gradient(90deg, var(--player-1), 2%, var(--player-1-dark), 80%, var(--darkgrey));
-}
-
-.player-wrapper.active.red {
-    background: linear-gradient(-90deg, var(--player-2-light), 2%, var(--player-2), 80%, var(--darkgrey));
-}
-.player-wrapper.inactive.red {
-    background: linear-gradient(-90deg, var(--player-2), 2%, var(--player-2-dark), 80%, var(--darkgrey));
 }
 
 .player{

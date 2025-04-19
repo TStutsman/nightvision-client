@@ -18,7 +18,7 @@ const { copy } = useClipboard();
       </svg>
     </div>
 
-    <h1 id="title">Night Vision</h1>
+    <h1 id="title">Watch out for bears!</h1>
 
     <div id="exit-btn" v-if="gameId !== ''">
       <button class="btn-small" @click="emit('leaveGame')">Exit Game</button>

@@ -22,6 +22,7 @@ watch(() => props.illuminated == true, () => {
         <div class="tile">
             <div class="tile-inner" :class="{flipped:revealed, unflipped:!revealed}">
                 <div class="tile-back" :class="{bright:illuminated}">
+                    <img src="../images/tile.svg"/>
                 </div>
                 <div class="tile-front">
                     <i :class="{unhidden:revealed}">
@@ -83,9 +84,10 @@ watch(() => props.illuminated == true, () => {
     justify-content: center;
 
     cursor: pointer;
-
-    background-image: url('../images/tile.svg');
-    transition: background-color .5s;
+}
+.tile-back img {
+    height: var(--tile-height);
+    width: var(--tile-width);
 }
 .tile-front {
     transform: rotateY(180deg);
@@ -105,9 +107,10 @@ watch(() => props.illuminated == true, () => {
   opacity: 0.8;
   border-radius: var(--tile-b-rad);
 }
-.bright {
+/* TODO UPDATE SO SVG CHANGES COLORS */
+/* .bright {
     background-color: var(--white);
-}
+} */
 i {
   display: flex;
   place-items: center;

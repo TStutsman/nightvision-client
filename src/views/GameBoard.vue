@@ -27,7 +27,7 @@ const deilluminate = (id: number) => game.value.deck[id].illuminated = false;
   <EndGameView v-if="game?.endGameStatus" @play-again="socket.emit('playAgain')" :endGameState="game?.endGameStatus"/>
 
   <div id="game">
-    <div id="board" :class="'player' + game.activePlayer.toString()">
+    <div id="board">
       <div id="tiles">
         <Tile 
           v-for="(tile, index) in game?.deck"
@@ -40,10 +40,15 @@ const deilluminate = (id: number) => game.value.deck[id].illuminated = false;
           @deilluminate="deilluminate(index)"
         />
       </div>
-
       <div class="errorMessage">{{game.message}}</div>
+    </div>
 
-      <div id="abilities">
+    <div id="players">
+      <Player :player="game?.players[1]" :is-active="game?.activePlayer === 1"/>
+      <Player :player="game?.players[2]" :is-active="game?.activePlayer === 2"/>
+    </div>
+
+    <div id="abilities">
         <Ability 
         name="flashlight"
         text='FLASHLIGHT'
@@ -63,24 +68,21 @@ const deilluminate = (id: number) => game.value.deck[id].illuminated = false;
         @reshuffle="socket.emit('reshuffle')" 
         />
       </div>
-    </div>
-
-    <div id="players">
-      <Player :player="game?.players[1]" :is-active="game?.activePlayer === 1"/>
-      <Player :player="game?.players[2]" :is-active="game?.activePlayer === 2"/>
-    </div>
   </div>
 </template>
 
 <style scoped>
 #game {
-  display: flex;
-  place-content: center;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: 1fr;
 
   width: 100%;
 }
 
 #board {
+  grid-column: 2;
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -88,29 +90,17 @@ const deilluminate = (id: number) => game.value.deck[id].illuminated = false;
   padding: 5px;
   width: 62%;
   min-width: 875px;
+}
+
+#tiles{
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(3, 1fr);
 
   background-color: rgba(22, 24, 23, .8);
 
   border-radius: 8px;
   border: 1px ridge var(--darkgrey);
-}
-
-#board.player1{
-  border: 1px ridge var(--player-1-dark);
-  border-left: 1px ridge #49a4e5;
-  border-right: 1px ridge var(--player-2-dark);
-}
-
-#board.player2{
-  border: 1px ridge #290911;
-  border-left: 1px ridge var(--player-1-dark);
-  border-right: 1px ridge #ee506d;
-}
-
-#tiles{
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
 }
 
 .errorMessage{
@@ -121,16 +111,18 @@ const deilluminate = (id: number) => game.value.deck[id].illuminated = false;
   height: 14px;
 
   font-size: 14px;
-  color: var(--green);
+  color: var(--yellow);
 }
 
 #abilities {
+  grid-column: 3;
+
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: flex-end;
   align-items: center;
 
-  margin-top: 1rem;
-  padding: 0 14px 4px;
+  gap: 8px;
   width: 100%;
 }
 
