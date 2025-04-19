@@ -43,9 +43,10 @@ const deilluminate = (id: number) => game.value.deck[id].illuminated = false;
       <div class="errorMessage">{{game.message}}</div>
     </div>
 
-    <div id="players">
+    <div id="left-column">
       <Player :player="game?.players[1]" :is-active="game?.activePlayer === 1"/>
       <Player :player="game?.players[2]" :is-active="game?.activePlayer === 2"/>
+      <h3>QR CODE HERE</h3>
     </div>
 
     <div id="abilities">
@@ -119,19 +120,21 @@ const deilluminate = (id: number) => game.value.deck[id].illuminated = false;
 
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: space-around;
   align-items: center;
 
   gap: 8px;
   width: 100%;
 }
 
-#players {
+#left-column {
   grid-column: 1;
   grid-row: 1;
   
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }
 
 @media screen and (min-width: 1280px) {

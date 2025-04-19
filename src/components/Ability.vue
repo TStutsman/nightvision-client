@@ -21,6 +21,8 @@ const showDesc = ref(false);
 <style scoped>
 .ability {
     font-size: 1em;
+
+    height: 80px;
 }
 
 button > h3 {
